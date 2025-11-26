@@ -18,6 +18,7 @@ namespace HaloPixelToolBox.Views
             ViewModel.NavigationViewService.Initialize(navigationView, navigationFrame);
             ViewModel.MessageService.Initialize(messageStackPanel, DispatcherQueue);
             ViewModel.DialogService.RegisterDialog(upgradeDialog);
+            ViewModel.PageService.Initialize(this);
             ViewModel.LoadingService.Initialize(loadingGrid, globalLoadingGrid, globalLoadingTextBlock, DispatcherQueue, ViewModel.NavigationViewService.NavigationService);
             ViewModel.NavigationViewService.NavigateTo<CloudMusicLyricsToolPage>();
         }

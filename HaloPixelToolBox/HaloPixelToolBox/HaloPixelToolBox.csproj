@@ -16,10 +16,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Styles\ConverterResources.xaml" />
     <None Remove="Views\MainPage.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Remove="Styles\ConverterResources.xaml" />
   </ItemGroup>
   
   <ItemGroup>
@@ -60,7 +58,9 @@
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.250402" />
     <PackageReference Include="XFEExtension.NetCore" Version="3.3.*" />
     <PackageReference Include="XFEExtension.NetCore.AutoConfig" Version="2.0.*" />
+    <PackageReference Include="XFEExtension.NetCore.UpgradeHelper" Version="1.0.1" />
     <PackageReference Include="XFEExtension.NetCore.WinUIHelper" Version="1.2.*" />
+    <PackageReference Include="XFEExtension.NetCore.XFEConsole" Version="1.1.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HaloPixelToolBox.Core\HaloPixelToolBox.Core.csproj" />
@@ -71,9 +71,9 @@
     <Folder Include="Utilities\Selector\" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Styles\ConverterResources.xaml">
+    <Page Update="Styles\ConverterResources.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </None>
+    </Page>
     <Page Update="Views\CloudMusicLyricsToolPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

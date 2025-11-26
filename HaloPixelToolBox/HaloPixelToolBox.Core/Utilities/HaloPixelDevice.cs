@@ -35,11 +35,6 @@ public class HaloPixelDevice
         using var stream = CurrentDevice?.Open();
         byte[] package = new byte[64];
         var data = HidPacketBuilder.Build(text);
-        foreach (var per in data)
-        {
-            Console.Write($"{per:x}");
-        }
-        Console.WriteLine();
         Array.Copy(data, package, data.Length);
         stream?.Write(package);
         stream?.Close();

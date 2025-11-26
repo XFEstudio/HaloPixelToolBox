@@ -6,6 +6,7 @@ namespace HaloPixelToolBox.Core.Utilities;
 
 public class CloudMusicLyricsReader
 {
+    public nint Address { get; set; }
     public MemoryEditor Editor { get; set; } = new();
 
     public bool Initialize()
@@ -13,6 +14,7 @@ public class CloudMusicLyricsReader
         if (GetCloudMusicLyricsProcess() is Process process)
         {
             Editor.CurrentProcess = process;
+            Address = Editor.ResolvePointerAddress("cloudmusic.dll", 0x01CE4A50, 0xE0, 0x8, 0x120, 0x8, 0x0);
             return true;
         }
         else
@@ -24,7 +26,7 @@ public class CloudMusicLyricsReader
     public bool TryReadLyrics(out string lyrics)
     {
         lyrics = "无法读取歌词";
-        if (Editor.ReadMemory(Editor.ResolvePointerAddress("cloudmusic.dll", 0x01CE4A50, 0xE0, 0x8, 0x120, 0x8, 0x0), 200, out var buffer))
+        if (Editor.ReadMemory(Address, 200, out var buffer))
         {
             lyrics = Encoding.Unicode.GetString(buffer, 0, GetValidLength(buffer));
             return true;

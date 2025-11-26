@@ -2,6 +2,7 @@
 using XFEExtension.NetCore.WinUIHelper.Interface.Services;
 using XFEExtension.NetCore.WinUIHelper.Utilities;
 using XFEExtension.NetCore.WinUIHelper.Utilities.Helper;
+using XFEExtension.NetCore.XFEConsole;
 
 namespace HaloPixelToolBox
 {

@@ -22,6 +22,11 @@ namespace HaloPixelToolBox.Profiles.CrossVersionProfiles
         /// </summary>
         [ProfileProperty]
         private bool enableCloudMusicLyrics = false;
+        /// <summary>
+        /// 忽略的版本号
+        /// </summary>
+        [ProfileProperty]
+        private string ignoreVersion = string.Empty;
 
         static partial void SetThemeProperty(ref ElementTheme value) => AppThemeHelper.ChangeTheme(value);
     }

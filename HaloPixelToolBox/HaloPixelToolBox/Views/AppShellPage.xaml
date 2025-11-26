@@ -10,6 +10,7 @@
     mc:Ignorable="d" Loaded="Page_Loaded">
 
     <Grid x:Name="mainGrid">
+        <ContentDialog x:Name="upgradeDialog" Title="更新新版本" Content="{x:Bind ViewModel.UpgradeContentText, Mode=OneWay}" PrimaryButtonText="更新" SecondaryButtonText="忽略此版本" CloseButtonText="取消" DefaultButton="Primary"/>
         <Grid x:Name="appTitleBar" Canvas.ZIndex="1" Height="{Binding ElementName=navigationView, Path=CompactPaneLength}" IsHitTestVisible="True" VerticalAlignment="Top">
             <Image Source="/Assets/icon.png" HorizontalAlignment="Left" Width="16" Height="16"/>
             <TextBlock Text="HaloPixelToolBox" VerticalAlignment="Center" TextWrapping="NoWrap" Margin="28,0,0,0"/>

@@ -16,7 +16,7 @@ namespace HaloPixelToolBox.Installer.ViewModel.Pages
         [ObservableProperty]
         bool agreementChecked = false;
         [ObservableProperty]
-        string installPath = @$"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)}\HaloPixelToolBox.Installer";
+        string installPath = @$"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)}\HaloPixelToolBox";
         public InstallPage ViewPage { get; set; } = viewPage;
 
         [RelayCommand]
@@ -37,7 +37,7 @@ namespace HaloPixelToolBox.Installer.ViewModel.Pages
             if (openFolderDialog.ShowDialog() == true)
             {
                 if (FileHelper.IsRootPath(openFolderDialog.FolderName))
-                    InstallPath = $@"{openFolderDialog.FolderName}HaloPixelToolBox.Installer";
+                    InstallPath = $@"{openFolderDialog.FolderName}HaloPixelToolBox";
                 else
                     InstallPath = openFolderDialog.FolderName;
                 SystemProfile.InstallPath = InstallPath;

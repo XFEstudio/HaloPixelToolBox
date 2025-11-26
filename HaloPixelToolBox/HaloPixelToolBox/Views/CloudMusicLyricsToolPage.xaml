@@ -8,25 +8,40 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Key="SettingsSectionHeaderTextBlockStyle"
+               BasedOn="{StaticResource BodyStrongTextBlockStyle}"
+               TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="Margin" Value="1,30,0,6" />
+            </Style.Setters>
+        </Style>
+    </Page.Resources>
 
     <Grid>
         <ScrollView>
             <StackPanel Orientation="Vertical" Spacing="10">
                 <TextBlock Text="设备状态" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
-                <StackPanel Orientation="Horizontal" Spacing="20">
-                    <TextBlock Text="花再 Halo Pixel 状态："/>
-                    <Grid>
-                        <Border CornerRadius="90" Height="35" Width="35" Visibility="{x:Bind ViewModel.DeviceReady, Mode=OneWay, Converter={StaticResource BooleanInverseConverter}}" Background="{ThemeResource SystemFillColorCriticalBrush}"/>
-                        <Border CornerRadius="90" Height="35" Width="35" Visibility="{x:Bind ViewModel.DeviceReady, Mode=OneWay}" Background="{ThemeResource SystemFillColorSuccessBrush}"/>
+                <Grid RowSpacing="10" ColumnSpacing="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="花再 Halo Pixel 状态：" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{ThemeResource BodyStrongTextBlockStyle}"/>
+                    <Grid Grid.Column="1">
+                        <Border CornerRadius="90" Height="25" Width="25" Visibility="{x:Bind ViewModel.DeviceReady, Mode=OneWay, Converter={StaticResource BooleanInverseConverter}}" Background="{ThemeResource SystemFillColorCriticalBrush}"/>
+                        <Border CornerRadius="90" Height="25" Width="25" Visibility="{x:Bind ViewModel.DeviceReady, Mode=OneWay}" Background="{ThemeResource SystemFillColorSuccessBrush}"/>
                     </Grid>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="20">
-                    <TextBlock Text="网易云音乐 状态："/>
-                    <Grid>
-                        <Border CornerRadius="90" Height="35" Width="35" Visibility="{x:Bind ViewModel.CloudMusicReady, Mode=OneWay, Converter={StaticResource BooleanInverseConverter}}" Background="{ThemeResource SystemFillColorCriticalBrush}"/>
-                        <Border CornerRadius="90" Height="35" Width="35" Visibility="{x:Bind ViewModel.CloudMusicReady, Mode=OneWay}" Background="{ThemeResource SystemFillColorSuccessBrush}"/>
+                    <TextBlock Grid.Row="1" Text="网易云音乐 状态：" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{ThemeResource BodyStrongTextBlockStyle}"/>
+                    <Grid Grid.Column="1" Grid.Row="1">
+                        <Border CornerRadius="90" Height="25" Width="25" Visibility="{x:Bind ViewModel.CloudMusicReady, Mode=OneWay, Converter={StaticResource BooleanInverseConverter}}" Background="{ThemeResource SystemFillColorCriticalBrush}"/>
+                        <Border CornerRadius="90" Height="25" Width="25" Visibility="{x:Bind ViewModel.CloudMusicReady, Mode=OneWay}" Background="{ThemeResource SystemFillColorSuccessBrush}"/>
                     </Grid>
-                </StackPanel>
+                </Grid>
                 <TextBlock Text="启用状态" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
                 <controls:SettingsCard Header="启用歌词同步" Description="启用后，网易云的歌词会实时显示在花再 Halo Pixel 音响上">
                     <ToggleSwitch IsOn="{x:Bind ViewModel.EnableCloudMusicLyrics, Mode=TwoWay}"/>

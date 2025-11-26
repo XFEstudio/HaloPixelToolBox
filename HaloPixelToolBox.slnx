@@ -4,6 +4,7 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Project Path="HaloPixelToolBox.Installer.Package/HaloPixelToolBox.Installer.Package.csproj" Id="d37a90a9-f8fa-4f45-80bb-e34dadffb7f9" />
   <Project Path="HaloPixelToolBox.Installer/HaloPixelToolBox.Installer.csproj" Id="2ff32c8b-4030-4872-af93-8176e0a1edec" />
   <Project Path="HaloPixelToolBox/HaloPixelToolBox.Core/HaloPixelToolBox.Core.csproj" />
   <Project Path="HaloPixelToolBox/HaloPixelToolBox.Test/HaloPixelToolBox.Test.csproj" />

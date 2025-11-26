@@ -17,8 +17,9 @@ namespace HaloPixelToolBox.Views
             App.MainWindow?.SetTitleBar(appTitleBar);
             ViewModel.NavigationViewService.Initialize(navigationView, navigationFrame);
             ViewModel.MessageService.Initialize(messageStackPanel, DispatcherQueue);
+            ViewModel.DialogService.RegisterDialog(upgradeDialog);
             ViewModel.LoadingService.Initialize(loadingGrid, globalLoadingGrid, globalLoadingTextBlock, DispatcherQueue, ViewModel.NavigationViewService.NavigationService);
-            ViewModel.NavigationViewService.NavigateTo<MainPage>("MyParameter");
+            ViewModel.NavigationViewService.NavigateTo<CloudMusicLyricsToolPage>();
         }
 
         private void NavigationView_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)

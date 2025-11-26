@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/HaloPixelToolBox.Installer.Package/Source.zip
+/HaloPixelToolBox.Installer/Resources/Resource/Source.zip

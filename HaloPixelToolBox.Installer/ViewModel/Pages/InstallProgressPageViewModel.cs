@@ -14,7 +14,7 @@ namespace HaloPixelToolBox.Installer.ViewModel.Pages
         [RelayCommand]
         void ConfirmSuccess()
         {
-            var startInfo = new ProcessStartInfo(Path.Combine(SystemProfile.InstallPath, "花再工具箱.exe"))
+            var startInfo = new ProcessStartInfo(Path.Combine(SystemProfile.InstallPath, "HaloPixelToolBox.exe"))
             {
                 UseShellExecute = true,
                 WorkingDirectory = SystemProfile.InstallPath

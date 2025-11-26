@@ -56,6 +56,25 @@
                         <Button Grid.Column="1" Content="清除缓存" Command="{x:Bind ViewModel.ClearCacheCommand}"/>
                     </Grid>
                 </controls:SettingsCard>
+                <TextBlock Text="关于" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
+                <controls:SettingsExpander Header="花再工具箱" Description="© 2025 XFEstudio 保留所有权利">
+                    <controls:SettingsExpander.HeaderIcon>
+                        <ImageIcon Source="/Assets/icon.png"/>
+                    </controls:SettingsExpander.HeaderIcon>
+                    <TextBlock Grid.Column="2" Grid.RowSpan="2" Text="{x:Bind ViewModel.CurrentVersion, Mode=OneWay}" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                    <controls:SettingsExpander.Items>
+                        <controls:SettingsCard Header="作者">
+                            <TextBlock Text="XFEstudio" Foreground="{ThemeResource TextFillColorSecondary}"/>
+                        </controls:SettingsCard>
+                        <controls:SettingsCard Header="联系我们" HorizontalContentAlignment="Left" ContentAlignment="Vertical">
+                            <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
+                                <HyperlinkButton Content="加入QQ群" NavigateUri="https://qm.qq.com/q/KTw4AZp4CQ"/>
+                                <HyperlinkButton Content="Github" NavigateUri="https://github.com/XFEstudio"/>
+                                <HyperlinkButton Content="Bilibili主页" NavigateUri="https://space.bilibili.com/200494622"/>
+                            </StackPanel>
+                        </controls:SettingsCard>
+                    </controls:SettingsExpander.Items>
+                </controls:SettingsExpander>
             </StackPanel>
         </ScrollView>
     </Grid>

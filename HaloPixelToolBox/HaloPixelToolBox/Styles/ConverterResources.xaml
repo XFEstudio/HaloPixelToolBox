@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:XFEExtension.NetCore.WinUIHelper.Utilities.Converter"
+    xmlns:innerconverter="using:SCCApplication.Utilities.Converter">
+    <converter:BooleanTranslationConverter x:Key="BooleanTranslationConverter"/>
+    <converter:ObjectNullConverter x:Key="ObjectNullConverter"/>
+    <converter:StringFormatConverter x:Key="StringFormatConverter"/>
+    <converter:DateTimeOffsetConverter x:Key="DateTimeOffsetConverter"/>
+    <converter:EmptyStringConverter x:Key="EmptyStringConverter"/>
+    <innerconverter:ActualAmountConverter x:Key="ActualAmountConverter"/>
+    <innerconverter:PropertyPathConverter x:Key="PropertyPathConverter"/>
+    <innerconverter:EnumListConverter x:Key="EnumListConverter"/>
+    <innerconverter:PermissionLevelConverter x:Key="PermissionLevelConverter"/>
+    <innerconverter:SurnameToAvatarConverter x:Key="SurnameToAvatarConverter"/>
+    <innerconverter:EmptyStringParameterConverter x:Key="EmptyStringParameterConverter"/>
+    <innerconverter:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    <innerconverter:FuckWinUIDeveloperMotherNullableObjectConverter x:Key="FuckWinUIDeveloperMotherNullableObjectConverter"/>
+    <innerconverter:IndexPlusOneConverter x:Key="IndexPlusOneConverter"/>
+</ResourceDictionary>

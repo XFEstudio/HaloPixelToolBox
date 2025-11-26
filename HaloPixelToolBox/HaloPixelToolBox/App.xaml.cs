@@ -24,6 +24,7 @@ namespace HaloPixelToolBox
             this.InitializeComponent();
             AppThemeHelper.Theme = SystemProfile.Theme;
             PageManager.RegisterPage(typeof(AppShellPage));
+            PageManager.RegisterPage(typeof(CloudMusicLyricsToolPage));
             PageManager.RegisterPage(typeof(MainPage));
             PageManager.RegisterPage(typeof(SettingPage));
             UnhandledException += App_UnhandledException;

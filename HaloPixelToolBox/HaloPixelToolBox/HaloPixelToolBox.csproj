@@ -74,6 +74,9 @@
     <None Update="Styles\ConverterResources.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Views\CloudMusicLyricsToolPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\MainPage.xaml">

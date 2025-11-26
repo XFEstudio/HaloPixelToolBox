@@ -1,0 +1,28 @@
+﻿<UserControl
+    x:Class="HaloPixelToolBox.Installer.Views.Controls.ModernProgressBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clrnamespace:HaloPixelToolBox.Installer.Views.Controls"
+    mc:Ignorable="d" 
+    d:DesignHeight="450" d:DesignWidth="800" Name="modernProgressBar" SizeChanged="ModernProgressBar_SizeChanged" Loaded="ModernProgressBar_Loaded">
+
+    <Grid VerticalAlignment="{Binding VerticalAlignment, ElementName=modernProgressBar}" HorizontalAlignment="{Binding HorizontalAlignment, ElementName=modernProgressBar}" Width="{Binding Width, ElementName=modernProgressBar}" Height="{Binding Height, ElementName=modernProgressBar}" MaxWidth="{Binding MaxWidth, ElementName=modernProgressBar}" MaxHeight="{Binding MaxHeight, ElementName=modernProgressBar}" MinWidth="{Binding MinWidth, ElementName=modernProgressBar}" MinHeight="{Binding MinHeight, ElementName=modernProgressBar}">
+        <Border x:Name="progressBarBottom" BorderBrush="{Binding ProgressBarBorderBrush, ElementName=modernProgressBar}" BorderThickness="{Binding ProgressBarBorderThickness, ElementName=modernProgressBar}" CornerRadius="{Binding ProgressBarCornerRadius, ElementName=modernProgressBar}" Background="{Binding ProgressBackgroundColor, ElementName=modernProgressBar}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Border x:Name="progressBarTop" CornerRadius="{Binding ProgressBarCornerRadius, ElementName=modernProgressBar}" Background="{Binding ProgressColor, ElementName=modernProgressBar}" VerticalAlignment="Stretch" HorizontalAlignment="Left" RenderTransformOrigin="0.5, 0.5"/>
+                <Grid RenderTransformOrigin="0.5, 0.5" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="50">
+                    <Grid.RenderTransform>
+                        <TranslateTransform x:Name="progressBarTranslateTransform" X="-50"/>
+                    </Grid.RenderTransform>
+                    <Border x:Name="progressBarAnimationTop" CornerRadius="{Binding ProgressBarCornerRadius, ElementName=modernProgressBar}" Background="{Binding ProgressColor, ElementName=modernProgressBar}" VerticalAlignment="Stretch" HorizontalAlignment="Left" RenderTransformOrigin="0.5, 0.5" Width="50">
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="progressBarScaleTransform" ScaleX="0"/>
+                        </Border.RenderTransform>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

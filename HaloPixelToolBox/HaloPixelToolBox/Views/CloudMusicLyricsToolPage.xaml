@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="HaloPixelToolBox.Views.CloudMusicLyricsToolPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HaloPixelToolBox.Views"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ScrollView>
+            <StackPanel Orientation="Vertical" Spacing="10">
+                <TextBlock Text="设备状态" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
+                <StackPanel Orientation="Horizontal" Spacing="20">
+                    <TextBlock Text="花再 Halo Pixel 状态："/>
+                    <Grid>
+                        <Border CornerRadius="90" Height="35" Width="35" Visibility="{x:Bind ViewModel.DeviceReady, Mode=OneWay, Converter={StaticResource BooleanInverseConverter}}" Background="{ThemeResource SystemFillColorCriticalBrush}"/>
+                        <Border CornerRadius="90" Height="35" Width="35" Visibility="{x:Bind ViewModel.DeviceReady, Mode=OneWay}" Background="{ThemeResource SystemFillColorSuccessBrush}"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="20">
+                    <TextBlock Text="网易云音乐 状态："/>
+                    <Grid>
+                        <Border CornerRadius="90" Height="35" Width="35" Visibility="{x:Bind ViewModel.CloudMusicReady, Mode=OneWay, Converter={StaticResource BooleanInverseConverter}}" Background="{ThemeResource SystemFillColorCriticalBrush}"/>
+                        <Border CornerRadius="90" Height="35" Width="35" Visibility="{x:Bind ViewModel.CloudMusicReady, Mode=OneWay}" Background="{ThemeResource SystemFillColorSuccessBrush}"/>
+                    </Grid>
+                </StackPanel>
+                <TextBlock Text="启用状态" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
+                <controls:SettingsCard Header="启用歌词同步" Description="启用后，网易云的歌词会实时显示在花再 Halo Pixel 音响上">
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.EnableCloudMusicLyrics, Mode=TwoWay}"/>
+                </controls:SettingsCard>
+            </StackPanel>
+        </ScrollView>
+    </Grid>
+</Page>

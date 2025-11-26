@@ -17,6 +17,11 @@ namespace HaloPixelToolBox.Profiles.CrossVersionProfiles
         /// </summary>
         [ProfileProperty]
         private bool autoStart = false;
+        /// <summary>
+        /// 是否启用网易云音乐歌词
+        /// </summary>
+        [ProfileProperty]
+        private bool enableCloudMusicLyrics = false;
 
         static partial void SetThemeProperty(ref ElementTheme value) => AppThemeHelper.ChangeTheme(value);
     }

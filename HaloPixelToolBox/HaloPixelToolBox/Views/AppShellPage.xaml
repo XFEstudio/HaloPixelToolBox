@@ -33,9 +33,9 @@
         </Grid>
         <NavigationView x:Name="navigationView" IsBackButtonVisible="Visible" Canvas.ZIndex="0" IsBackEnabled="{x:Bind ViewModel.CanGoBack, Mode=OneWay}" IsSettingsVisible="False" DisplayModeChanged="NavigationView_DisplayModeChanged" PaneOpening="NavigationView_PaneOpening" PaneOpened="NavigationView_PaneOpened" PaneClosing="NavigationView_PaneClosing" PaneClosed="NavigationView_PaneClosed">
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="主页" add:NavigationAddition.NavigateTo="HaloPixelToolBox.Views.MainPage" add:NavigationAddition.NavigateParameter="MyParameter">
+                <NavigationViewItem Content="网易云歌词" add:NavigationAddition.NavigateTo="HaloPixelToolBox.Views.CloudMusicLyricsToolPage">
                     <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE7C3;"/>
+                        <FontIcon Glyph="&#xE8D6;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             <!--在此处添加导航栏页面-->

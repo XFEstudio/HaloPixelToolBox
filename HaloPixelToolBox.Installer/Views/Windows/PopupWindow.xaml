@@ -1,0 +1,32 @@
+﻿<Window x:Class="HaloPixelToolBox.Installer.Views.Windows.PopupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodel="clr-namespace:HaloPixelToolBox.Installer.ViewModel.Windows"
+        xmlns:local="clr-namespace:HaloPixelToolBox.Installer.Views.Windows"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=viewmodel:PopupWindowViewModel}"
+        Title="PopupWindow" ShowInTaskbar="False" Width="320" Height="230" Background="Transparent" WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterOwner">
+    <Window.Effect>
+        <DropShadowEffect BlurRadius="8" ShadowDepth="3" Direction="-45"/>
+    </Window.Effect>
+    <Border CornerRadius="16" Background="{Binding PopupContentBackground}" BorderBrush="{Binding PopupBorder}" BorderThickness="{Binding PopupThickness}" Margin="10" ClipToBounds="True">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="35"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.ColumnSpan="2" CornerRadius="15,15,0,0" Background="{Binding PopupBackground}"/>
+            <Border x:Name="dragTabBorder" CornerRadius="15,0,15,0" Style="{StaticResource TabBorderStyle}" MouseMove="DragTabBorder_MouseMove" Visibility="{Binding MoveButtonVisibility}">
+                <Image x:Name="dragTabImage" Source="/Resources/Image/tabline.png" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4"/>
+            </Border>
+            <Image x:Name="closeWindowImage" Style="{StaticResource HalfRotorImage}" Grid.Column="1" Source="/Resources/Image/close.png" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4" MouseLeftButtonUp="CloseWindowImage_MouseLeftButtonUp" Visibility="{Binding CloseButtonVisibility}"/>
+            <Frame Grid.Row="1" Grid.ColumnSpan="2" x:Name="contentFrame" Content="{Binding Content}" NavigationUIVisibility="Hidden" Background="{Binding PopupContentBackground}" Margin="0,0,0,15"/>
+        </Grid>
+    </Border>
+</Window>

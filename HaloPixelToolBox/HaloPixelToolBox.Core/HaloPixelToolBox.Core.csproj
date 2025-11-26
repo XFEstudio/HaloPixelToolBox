@@ -8,7 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="HidSharp" Version="2.6.4" />
     <PackageReference Include="XFEExtension.NetCore" Version="3.3.*" />
+    <PackageReference Include="XFEExtension.NetCore.MemoryEditor" Version="2.1.0" />
   </ItemGroup>
 
 </Project>

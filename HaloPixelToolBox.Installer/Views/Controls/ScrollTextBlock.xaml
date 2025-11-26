@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="HaloPixelToolBox.Installer.Views.Controls.ScrollTextBlock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HaloPixelToolBox.Installer.Views.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Name="scrollTextBlock" Loaded="ScrollTextBlock_Loaded">
+    <ScrollViewer x:Name="scrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" MaxWidth="{Binding MaxWidth, ElementName=scrollTextBlock}" MinWidth="{Binding MinWidth, ElementName=scrollTextBlock}" Width="{Binding Width,ElementName=scrollTextBlock}" Height="{Binding Height,ElementName=scrollTextBlock}">  
+        <StackPanel x:Name="stackPanel" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock x:Name="textBlock" Foreground="{Binding InnerForeground, ElementName=scrollTextBlock}" Background="{Binding InnerBackground, ElementName=scrollTextBlock}" Text="{Binding InnerText, ElementName=scrollTextBlock}" FontSize="{Binding InnerFontSize, ElementName=scrollTextBlock}" FontFamily="{Binding InnerFontFamily, ElementName=scrollTextBlock}" FontWeight="{Binding InnerFontWeight, ElementName=scrollTextBlock}" TextAlignment="{Binding InnerTextAlignment, ElementName=scrollTextBlock}" TextDecorations="{Binding InnerTextDecorations, ElementName=scrollTextBlock}" VerticalAlignment="{Binding InnerTextVerticalAlignment, ElementName=scrollTextBlock}" HorizontalAlignment="{Binding InnerTextHorizontalAlignment, ElementName=scrollTextBlock}"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

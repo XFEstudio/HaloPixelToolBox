@@ -29,7 +29,7 @@
         /// <summary>
         /// 安装目录
         /// </summary>
-        public static string InstallPath { get; set; } = @$"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)}\HaloPixelToolBox.Installer";
+        public static string InstallPath { get; set; } = @$"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)}\HaloPixelToolBox";
         /// <summary>
         /// 第一次安装
         /// </summary>

@@ -20,12 +20,7 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
 
     public CloudMusicLyricsToolPageViewModel()
     {
-        AutoNavigationParameterService.ParameterChange += AutoNavigationParameterService_ParameterChange;
-    }
-
-    private async void AutoNavigationParameterService_ParameterChange(object? sender, string? e)
-    {
-        await Task.WhenAll(new List<Task>
+        _ = Task.WhenAll(new List<Task>
         {
             Task.Run(async () =>
             {

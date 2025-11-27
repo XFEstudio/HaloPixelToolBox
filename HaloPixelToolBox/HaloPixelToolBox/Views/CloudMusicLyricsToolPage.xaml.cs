@@ -14,6 +14,7 @@ public sealed partial class CloudMusicLyricsToolPage : Page
         Current = this;
         InitializeComponent();
         ViewModel.AutoNavigationParameterService.Initialize(this);
+        NavigationCacheMode = NavigationCacheMode.Enabled;
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)

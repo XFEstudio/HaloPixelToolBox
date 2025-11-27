@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text;
 using XFEExtension.NetCore.MemoryEditor;
+using XFEExtension.NetCore.StringExtension;
 
 namespace HaloPixelToolBox.Core.Utilities;
 
@@ -51,7 +52,7 @@ public class CloudMusicLyricsReader
     {
         foreach (var process in Process.GetProcesses())
         {
-            if (process.MainWindowTitle == "桌面歌词")
+            if (process.ProcessName == "cloudmusic" && (process.MainWindowTitle == "桌面歌词" || !process.MainWindowTitle.IsNullOrWhiteSpace()))
                 return process;
         }
         return null;

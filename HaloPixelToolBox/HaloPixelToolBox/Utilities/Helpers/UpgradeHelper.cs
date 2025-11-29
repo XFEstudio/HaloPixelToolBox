@@ -28,7 +28,7 @@ public static class UpgradeHelper
     /// </summary>
     public static void StartUpdate(string downloadUrl)
     {
-        var startInfo = new ProcessStartInfo("HaloPixelToolBox.Installer.exe")
+        var startInfo = new ProcessStartInfo("Installer.exe")
         {
             UseShellExecute = true,
             Verb = "runas"

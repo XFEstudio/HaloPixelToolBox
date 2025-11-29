@@ -1,4 +1,6 @@
 ﻿using HaloPixelToolBox.Profiles.CrossVersionProfiles;
+using HaloPixelToolBox.Utilities;
+using XFEExtension.NetCore.FileExtension;
 using XFEExtension.NetCore.WinUIHelper.Interface.Services;
 using XFEExtension.NetCore.WinUIHelper.Utilities;
 using XFEExtension.NetCore.WinUIHelper.Utilities.Helper;
@@ -22,7 +24,10 @@ namespace HaloPixelToolBox
         /// </summary>
         public App()
         {
+            XFEConsole.UseXFEConsoleLog();
+            Console.WriteLine("正在初始化应用程序...");
             this.InitializeComponent();
+            Console.WriteLine("应用程序初始化完成");
             AppThemeHelper.Theme = SystemProfile.Theme;
             PageManager.RegisterPage(typeof(AppShellPage));
             PageManager.RegisterPage(typeof(CloudMusicLyricsToolPage));
@@ -36,6 +41,8 @@ namespace HaloPixelToolBox
             if (ServiceManager.GetService<IMessageService>() is IMessageService messageService)
             {
                 messageService.ShowMessage(e.Message, "发生错误", InfoBarSeverity.Error);
+                Console.WriteLine($"[ERROR]{e.Message}");
+                Console.WriteLine($"[TRACE]{e.Exception.StackTrace}");
                 e.Handled = true;
             }
         }
@@ -46,9 +53,27 @@ namespace HaloPixelToolBox
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+            MainWindow.Closed += MainWindow_Closed;
             MainWindow.Content = new AppShellPage();
             MainWindow.Activate();
             AppThemeHelper.MainWindow = MainWindow;
+        }
+
+        private void MainWindow_Closed(object sender, WindowEventArgs args)
+        {
+            Console.WriteLine("正在退出...");
+            Console.WriteLine("正在保存日志...");
+            var logs = Directory.GetFiles(AppPath.LogDictionary);
+            if (logs.Length > 10)
+            {
+                foreach (var log in logs.OrderByDescending(x => x).Skip(10))
+                {
+                    File.Delete(log);
+                }
+            }
+            XFEConsole.Log.Export().WriteIn($@"{AppPath.LogDictionary}\{DateTime.Now:yyyy-M-d_HH-mm-ss}.log");
+            Console.WriteLine("日志保存成功");
+            Current.Exit();
         }
     }
 }

@@ -56,6 +56,12 @@
                         <Button Grid.Column="1" Content="清除缓存" Command="{x:Bind ViewModel.ClearCacheCommand}"/>
                     </Grid>
                 </controls:SettingsCard>
+                <controls:SettingsCard Header="程序日志" Description="{x:Bind ViewModel.AppLogDirectory, Mode=OneWay}" IsClickEnabled="True" Command="{x:Bind ViewModel.OpenPathCommand}" CommandParameter="{x:Bind ViewModel.AppLogDirectory, Mode=OneWay}">
+                    <controls:SettingsCard.ActionIcon>
+                        <FontIcon Glyph="&#xE8A7;"/>
+                    </controls:SettingsCard.ActionIcon>
+                    <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind ViewModel.AppLogSize, Mode=OneWay}" VerticalAlignment="Center"/>
+                </controls:SettingsCard>
                 <TextBlock Text="关于" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
                 <controls:SettingsExpander Header="花再工具箱" Description="© 2025 XFEstudio 保留所有权利">
                     <controls:SettingsExpander.HeaderIcon>

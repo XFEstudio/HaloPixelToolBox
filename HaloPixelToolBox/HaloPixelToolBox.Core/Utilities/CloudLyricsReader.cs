@@ -14,9 +14,9 @@ public class CloudMusicLyricsReader
     {
         if (GetCloudMusicLyricsProcess() is Process process)
         {
+            Console.WriteLine($"[DEBUG]已找到进程：{process.ProcessName}({process.Id}|{process.Id:X}) - {process.MainWindowTitle}");
             Editor.CurrentProcess = process;
-            Address = Editor.ResolvePointerAddress("cloudmusic.dll", 0x01CE4A50, 0xE0, 0x8, 0x120, 0x8, 0x0);
-            return true;
+            return ReresolveAddress();
         }
         else
         {
@@ -33,6 +33,30 @@ public class CloudMusicLyricsReader
             return true;
         }
         else return false;
+    }
+
+    public bool ReresolveAddress()
+    {
+        try
+        {
+            var address = Editor.ResolvePointerAddress("cloudmusic.dll", 0x01CEBD70, 0xE0, 0x8, 0x120, 0x8, 0x0);
+            Console.WriteLine($"[DEBUG]读取到的地址：{address}");
+            if (address != 0)
+            {
+                Address = address;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[ERROR]{ex.Message}");
+            Console.WriteLine($"[TRACE]{ex.StackTrace}");
+            return false;
+        }
     }
 
     public static int GetValidLength(byte[] buffer)

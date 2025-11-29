@@ -1,7 +1,6 @@
-﻿namespace HaloPixelToolBox.Core.Models
+﻿namespace HaloPixelToolBox.Core.Models;
+
+public class MyModel
 {
-    public class MyModel
-    {
-        public int MyProperty { get; set; }
-    }
+    public int MyProperty { get; set; }
 }

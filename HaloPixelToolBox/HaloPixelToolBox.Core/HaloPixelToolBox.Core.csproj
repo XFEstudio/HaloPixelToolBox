@@ -11,6 +11,7 @@
     <PackageReference Include="HidSharp" Version="2.6.4" />
     <PackageReference Include="XFEExtension.NetCore" Version="3.3.*" />
     <PackageReference Include="XFEExtension.NetCore.MemoryEditor" Version="2.1.0" />
+    <PackageReference Include="XFEExtension.NetCore.XFEConsole" Version="1.1.2" />
   </ItemGroup>
 
 </Project>

@@ -24,25 +24,23 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
         {
             Task.Run(async () =>
             {
+                Console.WriteLine("正在搜索花再设备...");
                 while (!DeviceReady)
                 {
-                    AutoNavigationParameterService.CurrentPage?.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        DeviceReady = Device.Initialize();
-                    });
+                    DeviceReady = Device.Initialize();
                     await Task.Delay(500);
                 }
+                Console.WriteLine("花再设备已连接");
             }),
             Task.Run(async () =>
             {
+                Console.WriteLine("正在搜索云音乐...");
                 while (!CloudMusicReady)
                 {
-                    AutoNavigationParameterService.CurrentPage?.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        CloudMusicReady = Reader.Initialize();
-                    });
+                    CloudMusicReady = Reader.Initialize();
                     await Task.Delay(500);
                 }
+                Console.WriteLine("云音乐已准备就绪");
             }),
             Task.Run(async () =>
             {
@@ -52,6 +50,7 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
                     {
                         if (DeviceReady && CloudMusicReady && EnableCloudMusicLyrics)
                         {
+                            Console.WriteLine("[DEBUG]设备均在线，准备进入主循环");
                             string lastRead = string.Empty;
                             while (true)
                             {
@@ -63,22 +62,25 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
                                     {
                                         lastRead = lyrics;
                                         Device.ShowText(lyrics);
+                                        Console.WriteLine($"已读取到歌词：{lyrics}");
                                     }
-                                    Console.WriteLine(lyrics);
                                     await Task.Delay(50);
                                 }
                                 catch(Exception ex)
                                 {
-                                    Console.WriteLine(ex);
+                                    Console.WriteLine($"[ERROR]{ex.Message}");
+                                    Console.WriteLine($"[TRACE]{ex.StackTrace}");
                                 }
                             }
+                            Console.WriteLine($"[DEBUG]主循环已退出");
                         }
                         Console.WriteLine(DeviceReady && CloudMusicReady && EnableCloudMusicLyrics);
                         await Task.Delay(500);
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        Console.WriteLine($"[ERROR]{ex.Message}");
+                        Console.WriteLine($"[TRACE]{ex.StackTrace}");
                     }
                 }
             })

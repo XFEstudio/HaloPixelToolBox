@@ -1,9 +1,10 @@
-﻿using System.Reflection;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HaloPixelToolBox.Core.Utilities.Helpers;
 using HaloPixelToolBox.Profiles.CrossVersionProfiles;
+using HaloPixelToolBox.Utilities;
 using Microsoft.Win32;
+using System.Reflection;
 using XFEExtension.NetCore.FileExtension;
 using XFEExtension.NetCore.WinUIHelper.Interface.Services;
 using XFEExtension.NetCore.WinUIHelper.Utilities;
@@ -23,6 +24,10 @@ namespace HaloPixelToolBox.ViewModels
         string appDataDirectory = AppPathHelper.AppLocalData;
         [ObservableProperty]
         string appDataSize = FileHelper.GetDirectorySize(new(AppPathHelper.AppLocalData)).FileSize();
+        [ObservableProperty]
+        string appLogDirectory = AppPath.LogDictionary;
+        [ObservableProperty]
+        string appLogSize = FileHelper.GetDirectorySize(new(AppPath.LogDictionary)).FileSize();
         [ObservableProperty]
         private string currentVersion = Assembly.GetEntryAssembly()?.GetName().Version is Version version ? version.ToString(3) : "无法获取版本信息";
         public ISettingService SettingService { get; set; } = ServiceManager.GetService<ISettingService>();

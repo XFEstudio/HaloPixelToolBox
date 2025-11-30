@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="HaloPixelToolBox.Installer.Views.Controls.MiniToolButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HaloPixelToolBox.Installer.Views.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Name="toolButton">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Button Width="50" Height="50" Command="{Binding Command,ElementName=toolButton}" CommandParameter="{Binding CommandParameter,ElementName=toolButton}" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Width="50" Height="50">
+                                    <Border CornerRadius="10" Background="{DynamicResource MainColor}">
+                                        <Border.Clip>
+                                            <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,50,50"/>
+                                        </Border.Clip>
+                                        <Border.Effect>
+                                            <BlurEffect Radius="10"/>
+                                        </Border.Effect>
+                                        <Image Width="45" Height="45" Source="{Binding IconSource,ElementName=toolButton,FallbackValue=/Resources/Image/wrench_tool.png}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Image.Clip>
+                                                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,45,45"/>
+                                            </Image.Clip>
+                                        </Image>
+                                    </Border>
+                                    <Border CornerRadius="10" BorderThickness="2" BorderBrush="#5050b7" Padding="3">
+                                        <Image Source="{Binding IconSource,ElementName=toolButton,FallbackValue=/Resources/Image/wrench_tool.png}">
+                                            <Image.Clip>
+                                                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,40,40"/>
+                                            </Image.Clip>
+                                        </Image>
+                                    </Border>
+                                    <Border CornerRadius="10" Width="50" Height="50">
+                                        <Border.Background>
+                                            <SolidColorBrush x:Name="effectBorderBackground" Color="Black" Opacity="0"/>
+                                        </Border.Background>
+                                    </Border>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <EventTrigger RoutedEvent="MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="effectBorderBackground" Storyboard.TargetProperty="Opacity" To="0.2" Duration="0:0:0.3">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <CubicEase EasingMode="EaseOut"/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="effectBorderBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <CubicEase EasingMode="EaseOut"/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="PreviewMouseLeftButtonDown">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="effectBorderBackground" Storyboard.TargetProperty="Opacity" To="0.5" Duration="0:0:0.3">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <CubicEase EasingMode="EaseOut"/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="PreviewMouseLeftButtonUp">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="effectBorderBackground" Storyboard.TargetProperty="Opacity" To="0.2" Duration="0:0:0.3">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <CubicEase EasingMode="EaseOut"/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Border Grid.Row="1" Width="40" Height="5" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="1" BorderBrush="{Binding ProgressBorderBrush,ElementName=toolButton}" Margin="0,2,0,2" CornerRadius="3" Visibility="{Binding ProgressVisibility,ElementName=toolButton}">
+            <ProgressBar Value="{Binding ProgressValue,ElementName=toolButton}" Foreground="{Binding ProgressForeground,ElementName=toolButton}" Background="{Binding ProgressBackground,ElementName=toolButton}" BorderThickness="0" LargeChange="{Binding ProgressLargeChange,ElementName=toolButton}" SmallChange="{Binding ProgressSmallChange,ElementName=toolButton}">
+                <ProgressBar.Clip>
+                    <RectangleGeometry RadiusX="3" RadiusY="3" Rect="0,0,38,3"/>
+                </ProgressBar.Clip>
+            </ProgressBar>
+        </Border>
+        <local:ScrollTextBlock x:Name="scrollTextBlock" AutoRolling="False" Grid.Row="2" InnerText="{Binding ToolName,ElementName=toolButton}" InnerForeground="{Binding TextColor,ElementName=toolButton}" MaxWidth="50" RollingBack="True" RollingTimeMillisecond="3000"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Resources\Icon\Icon.ico</ApplicationIcon>
+    <AssemblyName>Installer</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Icon\Icon.ico" />
+    <None Remove="Resources\Icon\Icon.png" />
+    <None Remove="Resources\Image\back.png" />
+    <None Remove="Resources\Image\background.png" />
+    <None Remove="Resources\Image\check.png" />
+    <None Remove="Resources\Image\clean.png" />
+    <None Remove="Resources\Image\close.png" />
+    <None Remove="Resources\Image\console.png" />
+    <None Remove="Resources\Image\corner.png" />
+    <None Remove="Resources\Image\download.png" />
+    <None Remove="Resources\Image\grid.png" />
+    <None Remove="Resources\Image\invisible.png" />
+    <None Remove="Resources\Image\min.png" />
+    <None Remove="Resources\Image\restart.png" />
+    <None Remove="Resources\Image\setting.png" />
+    <None Remove="Resources\Image\start.png" />
+    <None Remove="Resources\Image\stop.png" />
+    <None Remove="Resources\Image\tabline.png" />
+    <None Remove="Resources\Image\toolbox.png" />
+    <None Remove="Resources\Image\visible.png" />
+    <None Remove="Resources\Image\wrench.png" />
+    <None Remove="Resources\Image\wrench_tool.png" />
+    <None Remove="Resources\Resource\EULA.txt" />
+    <None Remove="Resources\Resource\PrivateService.txt" />
+    <None Remove="Resources\Resource\Source.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Icon\Icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Resource\EULA.txt" />
+    <EmbeddedResource Include="Resources\Resource\PrivateService.txt" />
+    <EmbeddedResource Include="Resources\Resource\Source.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+    <PackageReference Include="XFEExtension.NetCore" Version="3.2.7" />
+    <PackageReference Include="XFEExtension.NetCore.InputSimulator" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Icon\Icon.png" />
+    <Resource Include="Resources\Image\back.png" />
+    <Resource Include="Resources\Image\background.png" />
+    <Resource Include="Resources\Image\check.png" />
+    <Resource Include="Resources\Image\clean.png" />
+    <Resource Include="Resources\Image\close.png" />
+    <Resource Include="Resources\Image\console.png" />
+    <Resource Include="Resources\Image\corner.png" />
+    <Resource Include="Resources\Image\download.png" />
+    <Resource Include="Resources\Image\grid.png" />
+    <Resource Include="Resources\Image\invisible.png" />
+    <Resource Include="Resources\Image\min.png" />
+    <Resource Include="Resources\Image\restart.png" />
+    <Resource Include="Resources\Image\setting.png" />
+    <Resource Include="Resources\Image\start.png" />
+    <Resource Include="Resources\Image\stop.png" />
+    <Resource Include="Resources\Image\tabline.png" />
+    <Resource Include="Resources\Image\toolbox.png" />
+    <Resource Include="Resources\Image\visible.png" />
+    <Resource Include="Resources\Image\wrench.png" />
+    <Resource Include="Resources\Image\wrench_tool.png" />
+  </ItemGroup>
+
+</Project>

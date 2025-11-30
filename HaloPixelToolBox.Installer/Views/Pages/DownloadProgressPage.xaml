@@ -1,0 +1,40 @@
+﻿<Page x:Class="HaloPixelToolBox.Installer.Views.Pages.DownloadProgressPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:viewmodel="clr-namespace:HaloPixelToolBox.Installer.ViewModel.Pages"
+      xmlns:ctr="clr-namespace:HaloPixelToolBox.Installer.Views.Controls"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HaloPixelToolBox.Installer.Views.Pages" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      d:DataContext="{d:DesignInstance Type=viewmodel:DownloadProgressPageViewModel}"
+      Title="DownloadProgressPage" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="downloadGrid" Grid.ColumnSpan="2" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="正在下载" FontSize="15" Margin="10,0,0,0"/>
+            <ctr:ModernProgressBar x:Name="progress" Grid.Column="1" Margin="10,0,10,0" Height="10" ProgressBarCornerRadius="5" IsBusy="{Binding IsBusy}" IsPause="{Binding IsPause}" IsError="{Binding IsError}" Value="{Binding Value}" MaxValue="{Binding MaxValue}"/>
+        </Grid>
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DownloadText}" FontSize="15" Margin="0,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <ctr:RoundButton Grid.Row="2" Height="40" Margin="50,0" Command="{Binding PauseSwitchCommand}" VerticalAlignment="Center" IsEnabled="{Binding PauseSwitchEnable}">
+            <TextBlock Text="{Binding PauseText}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource MainColor}" FontSize="20"/>
+        </ctr:RoundButton>
+        <ctr:RoundButton Grid.Column="1" Grid.Row="2" Height="40" Margin="50,0" Command="{Binding RetryCommand}" VerticalAlignment="Center">
+            <TextBlock Text="重新下载" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource MainColor}" FontSize="20"/>
+        </ctr:RoundButton>
+    </Grid>
+</Page>

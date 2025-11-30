@@ -1,0 +1,4 @@
+[*.cs]
+
+# MVVMTK0045: Using [ObservableProperty] on fields is not AOT compatible for WinRT
+dotnet_diagnostic.MVVMTK0045.severity = none

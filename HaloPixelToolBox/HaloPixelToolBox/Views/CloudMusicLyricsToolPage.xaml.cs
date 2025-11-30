@@ -1,4 +1,6 @@
+using HaloPixelToolBox.Core.Models;
 using Microsoft.UI.Xaml.Navigation;
+using XFEExtension.NetCore.WinUIHelper.Utilities.Helper;
 
 namespace HaloPixelToolBox.Views;
 
@@ -14,6 +16,10 @@ public sealed partial class CloudMusicLyricsToolPage : Page
         Current = this;
         InitializeComponent();
         ViewModel.AutoNavigationParameterService.Initialize(this);
+        ViewModel.SettingService.AddComboBox(defaultHaloPixelTextLayoutComboBox, ProfileHelper.GetEnumProfileSaveFunc<HaloPixelTextLayout>(), ProfileHelper.GetEnumProfileLoadFuncForComboBox());
+        ViewModel.SettingService.AddComboBox(defaultHaloPixelUIModelComboBox, ProfileHelper.GetEnumProfileSaveFunc<HaloPixelUIModel>(), ProfileHelper.GetEnumProfileLoadFuncForComboBox());
+        ViewModel.SettingService.Initialize();
+        ViewModel.SettingService.RegisterEvents();
         NavigationCacheMode = NavigationCacheMode.Enabled;
     }
 

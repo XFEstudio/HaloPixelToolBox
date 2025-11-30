@@ -1,9 +1,10 @@
-﻿using HidSharp;
+﻿using HaloPixelToolBox.Core.Models;
+using HidSharp;
 using XFEExtension.NetCore.StringExtension;
 
 namespace HaloPixelToolBox.Core.Utilities;
 
-public class HaloPixelDevice
+public partial class HaloPixelDevice
 {
     public HidDevice? CurrentDevice { get; set; }
 
@@ -34,7 +35,27 @@ public class HaloPixelDevice
     {
         using var stream = CurrentDevice?.Open();
         byte[] package = new byte[64];
-        var data = HidPacketBuilder.Build(text);
+        var data = HidPacketBuilder.BuildText(text);
+        Array.Copy(data, package, data.Length);
+        stream?.Write(package);
+        stream?.Close();
+    }
+
+    public void SetTextLayout(HaloPixelTextLayout layout)
+    {
+        using var stream = CurrentDevice?.Open();
+        byte[] package = new byte[64];
+        var data = HidPacketBuilder.Build(HidPacketBuilder.ConvertLayout(layout));
+        Array.Copy(data, package, data.Length);
+        stream?.Write(package);
+        stream?.Close();
+    }
+
+    public void SetUIModel(HaloPixelUIModel haloPixelUIModel)
+    {
+        using var stream = CurrentDevice?.Open();
+        byte[] package = new byte[64];
+        var data = HidPacketBuilder.Build(HidPacketBuilder.ConvertUIModel(haloPixelUIModel));
         Array.Copy(data, package, data.Length);
         stream?.Write(package);
         stream?.Close();

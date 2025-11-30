@@ -46,6 +46,38 @@
                 <controls:SettingsCard Header="启用歌词同步" Description="启用后，网易云的歌词会实时显示在花再 Halo Pixel 音响上">
                     <ToggleSwitch IsOn="{x:Bind ViewModel.EnableCloudMusicLyrics, Mode=TwoWay}"/>
                 </controls:SettingsCard>
+                <TextBlock Text="个性化" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
+                <controls:SettingsExpander Header="暂停后切换回默认界面" Description="一段时间后自动切换回时钟界面等音响自带页面">
+                    <ToggleSwitch x:Name="switchBackWhenPauseToggleSwitch" IsOn="{x:Bind ViewModel.SwitchBackWhenPause, Mode=TwoWay}"/>
+                    <controls:SettingsExpander.Items>
+                        <controls:SettingsCard Header="暂停延迟" Description="设置多长时间后，音响切换回默认界面" IsEnabled="{x:Bind switchBackWhenPauseToggleSwitch.IsOn, Mode=OneWay}">
+                            <StackPanel Orientation="Horizontal" Spacing="20">
+                                <NumberBox SpinButtonPlacementMode="Compact" Value="{x:Bind ViewModel.SwitchBackTimeout, Mode=TwoWay}"/>
+                            </StackPanel>
+                        </controls:SettingsCard>
+                        <controls:SettingsCard Header="暂停界面" Description="设置暂停后切换回的默认界面" IsEnabled="{x:Bind switchBackWhenPauseToggleSwitch.IsOn, Mode=OneWay}">
+                            <ComboBox x:Name="defaultHaloPixelUIModelComboBox" Tag="HaloPixelToolBox.Profiles.CrossVersionProfiles.CloudMusicLyricsProfile.DefaultHaloPixelUIModel">
+                                <ComboBoxItem Content="时钟类" Tag="Clock"/>
+                                <ComboBoxItem Content="游戏类" Tag="Game"/>
+                                <ComboBoxItem Content="打工类" Tag="Work"/>
+                                <ComboBoxItem Content="读书类" Tag="Read"/>
+                                <ComboBoxItem Content="猫咪类" Tag="Cats"/>
+                                <ComboBoxItem Content="狗狗类" Tag="Dogs"/>
+                                <ComboBoxItem Content="热更类" Tag="Memes"/>
+                                <ComboBoxItem Content="赛博类" Tag="Cyber"/>
+                                <ComboBoxItem Content="频谱类" Tag="Waves"/>
+                            </ComboBox>
+                        </controls:SettingsCard>
+                    </controls:SettingsExpander.Items>
+                </controls:SettingsExpander>
+                <controls:SettingsCard Header="歌词位置" Description="设置歌词的默认显示位置">
+                    <ComboBox x:Name="defaultHaloPixelTextLayoutComboBox" Tag="HaloPixelToolBox.Profiles.CrossVersionProfiles.CloudMusicLyricsProfile.DefaultHaloPixelTextLayout">
+                        <ComboBoxItem Content="左对齐" Tag="Left"/>
+                        <ComboBoxItem Content="右对齐" Tag="Right"/>
+                        <ComboBoxItem Content="居中" Tag="Center"/>
+                        <ComboBoxItem Content="伸展" Tag="Stretch"/>
+                    </ComboBox>
+                </controls:SettingsCard>
             </StackPanel>
         </ScrollView>
     </Grid>

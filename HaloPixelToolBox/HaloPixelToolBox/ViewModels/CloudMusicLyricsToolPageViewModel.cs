@@ -68,6 +68,14 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
             {
                 while (true)
                 {
+                    Reader.ReresolveAddress();
+                    await Task.Delay(500);
+                }
+            }),
+            Task.Run(async () =>
+            {
+                while (true)
+                {
                     bool isClockUI = false;
                     int time = 0;
                     try

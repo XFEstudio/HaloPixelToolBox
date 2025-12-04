@@ -40,7 +40,8 @@ public class CloudMusicLyricsReader
         try
         {
             var address = Editor.ResolvePointerAddress("cloudmusic.dll", 0x01CEBD70, 0xE0, 0x8, 0x120, 0x8, 0x0);
-            Console.WriteLine($"[DEBUG]读取到的地址：{address}");
+            if (address != Address)
+                Console.WriteLine($"[DEBUG]读取到新的地址：{address}({address:X})");
             if (address != 0)
             {
                 Address = address;

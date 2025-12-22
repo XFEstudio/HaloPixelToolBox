@@ -61,7 +61,7 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
                     AutoNavigationParameterService.CurrentPage?.DispatcherQueue.TryEnqueue(() =>
                     {
                         CloudMusicReady = ready;
-                        CloudMusicVersion = ready && Reader.VersionInfo != null ? $"{Reader.VersionInfo}" : "未检测到云音乐";
+                        CloudMusicVersion = ready && Reader.VersionInfo is not null ? $"{Reader.VersionInfo.FileVersion}" : "未检测到云音乐";
                     });
                     await Task.Delay(500);
                 }

@@ -21,6 +21,8 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
     private bool switchBackWhenPause = CloudMusicLyricsProfile.SwitchBackWhenPause;
     [ObservableProperty]
     private int switchBackTimeout = CloudMusicLyricsProfile.SwitchBackTimeout;
+    [ObservableProperty]
+    private string cloudMusicVersion = string.Empty;
     public HaloPixelDevice Device { get; set; } = new();
     public CloudMusicLyricsReader Reader { get; set; } = new();
 
@@ -59,6 +61,7 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
                     AutoNavigationParameterService.CurrentPage?.DispatcherQueue.TryEnqueue(() =>
                     {
                         CloudMusicReady = ready;
+                        CloudMusicVersion = ready && Reader.VersionInfo != null ? $"{Reader.VersionInfo}" : "未检测到云音乐";
                     });
                     await Task.Delay(500);
                 }

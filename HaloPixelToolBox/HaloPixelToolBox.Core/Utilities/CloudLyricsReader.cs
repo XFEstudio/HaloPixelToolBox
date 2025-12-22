@@ -8,6 +8,7 @@ namespace HaloPixelToolBox.Core.Utilities;
 public class CloudMusicLyricsReader
 {
     public nint Address { get; set; }
+    public FileVersionInfo? VersionInfo { get; set; }
     public MemoryEditor Editor { get; set; } = new();
 
     public bool Initialize()
@@ -16,6 +17,7 @@ public class CloudMusicLyricsReader
         {
             Console.WriteLine($"[DEBUG]已找到进程：{process.ProcessName}({process.Id}|{process.Id:X}) - {process.MainWindowTitle}");
             Editor.CurrentProcess = process;
+            VersionInfo = FileVersionInfo.GetVersionInfo(process.MainModule?.FileName ?? string.Empty);
             return ReresolveAddress();
         }
         else

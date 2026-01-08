@@ -31,6 +31,8 @@ public class HidPacketBuilder
     /// </summary>
     public static byte[] BuildText(string text)
     {
+        if (text.Length > 50)
+            text = text.Substring(0, 50);
         var textBytes = Encoding.UTF8.GetBytes(text);
         byte textLen = (byte)textBytes.Length;
         // 有效载荷长度 = TextLen(1) + Text(N) + Checksum(1)

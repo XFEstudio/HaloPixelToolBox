@@ -25,6 +25,7 @@ namespace HaloPixelToolBox
         public App()
         {
             XFEConsole.UseXFEConsoleLog();
+            XFEConsole.Log.LogPath = Path.Combine(AppPath.LogDictionary, XFEConsole.Log.LogPath);
             Console.WriteLine("正在初始化应用程序...");
             this.InitializeComponent();
             Console.WriteLine("应用程序初始化完成");
@@ -71,7 +72,6 @@ namespace HaloPixelToolBox
                     File.Delete(log);
                 }
             }
-            XFEConsole.Log.Export().WriteIn($@"{AppPath.LogDictionary}\{DateTime.Now:yyyy-M-d_HH-mm-ss}.log");
             Console.WriteLine("日志保存成功");
             Current.Exit();
         }

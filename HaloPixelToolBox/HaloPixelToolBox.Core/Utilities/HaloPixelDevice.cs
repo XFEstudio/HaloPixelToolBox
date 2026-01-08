@@ -34,10 +34,8 @@ public partial class HaloPixelDevice
     public void ShowText(string text)
     {
         using var stream = CurrentDevice?.Open();
-        byte[] package = new byte[64];
         var data = HidPacketBuilder.BuildText(text);
-        Array.Copy(data, package, data.Length);
-        stream?.Write(package);
+        stream?.Write(data);
         stream?.Close();
     }
 

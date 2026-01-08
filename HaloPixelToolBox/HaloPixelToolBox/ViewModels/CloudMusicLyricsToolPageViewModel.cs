@@ -96,6 +96,7 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
                                         break;
                                     if (Reader.TryReadLyrics(out var lyrics) && lastRead != lyrics)
                                     {
+                                        Console.WriteLine($"已读取到歌词：{lyrics}");
                                         lastRead = lyrics;
                                         isClockUI = false;
                                         time = 0;
@@ -114,7 +115,6 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
                                             await Task.Delay(500);
                                             Device.SetTextLayout(Core.Models.HaloPixelTextLayout.ScrollRightToLeft);
                                         }
-                                        Console.WriteLine($"已读取到歌词：{lyrics}");
                                     }
                                     await Task.Delay(50);
                                     time += 50;

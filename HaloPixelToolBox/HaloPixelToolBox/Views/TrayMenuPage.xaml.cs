@@ -1,34 +1,24 @@
-using HaloPixelToolBox.Interface.Services;
-using HaloPixelToolBox.Utilities.Helpers;
-using HaloPixelToolBox.Utilities.Helpers.Win32;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Windows.Graphics;
-using XFEExtension.NetCore.WinUIHelper.Utilities;
 
 namespace HaloPixelToolBox.Views;
 
 /// <summary>
-/// An empty page that can be used on its own or navigated to within a Frame.
+/// Õ–≈Ã≤Àµ•“≥√Ê
 /// </summary>
 public sealed partial class TrayMenuPage : Page
 {
-    IntPtr _mouseHook = new();
-    LowLevelMouseProc? _proc;
     public Window MenuWindow { get; set; }
+    public TrayMenuPageViewModel ViewModel { get; set; }
+    public static TrayMenuPage? Current { get; set; }
 
     public TrayMenuPage(Window window)
     {
+        Current = this;
         MenuWindow = window;
+        ViewModel = new(window);
         InitializeComponent();
-        this.Loaded += (_, __) =>
-        {
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                ResizeToContent();
-            });
-        };
-        InstallMouseHook();
+        ViewModel.AutoNavigationParameterService.Initialize(this);
     }
 
     void ResizeToContent()
@@ -48,50 +38,9 @@ public sealed partial class TrayMenuPage : Page
         MenuWindow.AppWindow.Move(new PointInt32(Cursor.Position.X + 5, Cursor.Position.Y - h + 10));
     }
 
-    private void Show_Click(object _, RoutedEventArgs __)
+    private void Page_Loaded(object sender, RoutedEventArgs e)
     {
-        ServiceManager.GetGlobalService<ITrayIconService>()?.ShowWindow();
-        MenuWindow.Close();
-    }
-
-    private void Exit_Click(object _, RoutedEventArgs __)
-    {
-        ServiceManager.GetGlobalService<ITrayIconService>()?.ExitApp();
-    }
-
-    void InstallMouseHook()
-    {
-        _proc = HookCallback;
-        _mouseHook = Win32Helper.SetWindowsHookEx(Win32Helper.WH_MOUSE_LL, _proc, IntPtr.Zero, 0);
-    }
-
-    IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
-    {
-        try
-        {
-            if (nCode >= 0 && wParam == Win32Helper.WM_LBUTTONDOWN)
-            {
-                var hook = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
-                var pt = hook.pt;
-
-                var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MenuWindow);
-                Win32Helper.GetWindowRect(hwnd, out RECT rect);
-
-                bool inside =
-                    pt.x >= rect.Left && pt.x <= rect.Right &&
-                    pt.y >= rect.Top && pt.y <= rect.Bottom;
-
-                if (!inside)
-                {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        MenuWindow.Close();
-                    });
-                }
-            }
-        }
-        catch { }
-
-        return Win32Helper.CallNextHookEx(_mouseHook, nCode, wParam, lParam);
+        DispatcherQueue.TryEnqueue(ResizeToContent);
+        ViewModel.AutoNavigationParameterService.OnParameterChange(string.Empty);
     }
 }

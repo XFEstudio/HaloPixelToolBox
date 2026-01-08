@@ -11,6 +11,6 @@
     Title="TrayMenuWindow">
 
     <Window.SystemBackdrop>
-        <MicaBackdrop />
+        <DesktopAcrylicBackdrop/>
     </Window.SystemBackdrop>
 </Window>

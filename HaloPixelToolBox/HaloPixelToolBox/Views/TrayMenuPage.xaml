@@ -6,16 +6,50 @@
     xmlns:local="using:HaloPixelToolBox.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Loaded="Page_Loaded" Background="{ThemeResource DesktopAcrylicTransparentBrush}">
+    <Page.Resources>
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="CornerRadius" Value="0"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            </Style.Setters>
+        </Style>
+        <Style x:Key="MenuSeparatorStyle" TargetType="MenuFlyoutSeparator">
+            <Style.Setters>
+                <Setter Property="Margin" Value="10,5"/>
+            </Style.Setters>
+        </Style>
+    </Page.Resources>
 
     <StackPanel x:Name="panel" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Padding="20">
+        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Padding="20,20,20,5">
             <Image Source="/Assets/icon.png" HorizontalAlignment="Left" Width="16" Height="16"/>
-            <TextBlock Text="花再音响工具箱" VerticalAlignment="Center"/>
+            <TextBlock Text="花再工具箱" VerticalAlignment="Center"/>
         </StackPanel>
-        <MenuFlyoutSeparator Margin="10,0"/>
-        <Button Content="打开主界面" Click="Show_Click" HorizontalAlignment="Stretch" Style="{StaticResource SubtleButtonStyle}"/>
-        <MenuFlyoutSeparator Margin="10,0"/>
-        <Button Content="退出" Click="Exit_Click" HorizontalAlignment="Stretch" Style="{StaticResource SubtleButtonStyle}"/>
+        <MenuFlyoutSeparator Style="{ThemeResource MenuSeparatorStyle}"/>
+        <Button Command="{x:Bind ViewModel.ShowCommand}" Style="{ThemeResource MenuButtonStyle}">
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Left">
+                <FontIcon Glyph="&#xE80F;" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15"/>
+                <TextBlock Grid.Column="1" Text="主页" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+        <MenuFlyoutSeparator Style="{ThemeResource MenuSeparatorStyle}"/>
+        <Button Command="{x:Bind ViewModel.OpenSettingsCommand}" Style="{ThemeResource MenuButtonStyle}">
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Left">
+                <FontIcon Glyph="&#xE713;" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15"/>
+                <TextBlock Grid.Column="1" Text="设置" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+        <MenuFlyoutSeparator Style="{ThemeResource MenuSeparatorStyle}"/>
+        <Button Command="{x:Bind ViewModel.ExitCommand}" Style="{ThemeResource MenuButtonStyle}">
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Left">
+                <FontIcon Glyph="&#xE89F;" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15"/>
+                <TextBlock Text="退出" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+        <Grid Margin="0,5"/>
     </StackPanel>
 </Page>

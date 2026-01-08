@@ -56,6 +56,7 @@ public partial class TrayIconService : GlobalServiceBase, ITrayIconService
             var menu = new TrayMenuWindow();
             menu.AppWindow.MoveInZOrderAtTop();
             menu.AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
+            menu.AppWindow.IsShownInSwitchers = false;
             if (menu.AppWindow.Presenter is OverlappedPresenter presenter)
             {
                 presenter.SetBorderAndTitleBar(true, false);

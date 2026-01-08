@@ -1,21 +1,20 @@
 using Windows.UI.ViewManagement;
 using XFEExtension.NetCore.WinUIHelper.Utilities.Helper;
 
-namespace HaloPixelToolBox
+namespace HaloPixelToolBox;
+
+/// <summary>
+/// 主窗口
+/// </summary>
+public sealed partial class MainWindow : Window
 {
-    /// <summary>
-    /// ������
-    /// </summary>
-    public sealed partial class MainWindow : Window
+    public static UISettings UISettings { get; set; } = new UISettings();
+    public MainWindow()
     {
-        public static UISettings UISettings { get; set; } = new UISettings();
-        public MainWindow()
-        {
-            this.InitializeComponent();
-            ExtendsContentIntoTitleBar = true;
-            AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/icon.png"));
-            AppWindow.TitleBar.PreferredHeightOption = Microsoft.UI.Windowing.TitleBarHeightOption.Tall;
-            UISettings.ColorValuesChanged += (_, _) => DispatcherQueue.TryEnqueue(() => AppThemeHelper.ChangeTheme(AppThemeHelper.Theme));
-        }
+        this.InitializeComponent();
+        ExtendsContentIntoTitleBar = true;
+        AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/icon.png"));
+        AppWindow.TitleBar.PreferredHeightOption = Microsoft.UI.Windowing.TitleBarHeightOption.Tall;
+        UISettings.ColorValuesChanged += (_, _) => DispatcherQueue.TryEnqueue(() => AppThemeHelper.ChangeTheme(AppThemeHelper.Theme));
     }
 }

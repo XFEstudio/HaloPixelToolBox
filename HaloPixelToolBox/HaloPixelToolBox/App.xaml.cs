@@ -1,6 +1,9 @@
-﻿using HaloPixelToolBox.Profiles.CrossVersionProfiles;
+﻿using HaloPixelToolBox.Interface.Services;
+using HaloPixelToolBox.Profiles.CrossVersionProfiles;
 using HaloPixelToolBox.Utilities;
-using XFEExtension.NetCore.FileExtension;
+using HaloPixelToolBox.Utilities.Helpers;
+using Microsoft.UI.Dispatching;
+using System.Runtime.InteropServices;
 using XFEExtension.NetCore.WinUIHelper.Interface.Services;
 using XFEExtension.NetCore.WinUIHelper.Utilities;
 using XFEExtension.NetCore.WinUIHelper.Utilities.Helper;
@@ -13,6 +16,7 @@ namespace HaloPixelToolBox
     /// </summary>
     public partial class App : Application
     {
+        public ITrayIconService TrayIconService { get; } = ServiceManager.GetService<ITrayIconService>();
         /// <summary>
         /// 主页窗口
         /// </summary>
@@ -35,6 +39,37 @@ namespace HaloPixelToolBox
             PageManager.RegisterPage(typeof(MainPage));
             PageManager.RegisterPage(typeof(SettingPage));
             UnhandledException += App_UnhandledException;
+            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject is Exception ex)
+            {
+                Console.WriteLine($"[ERROR]{ex.Message}");
+                Console.WriteLine($"[TRACE]{ex.StackTrace}");
+            }
+            else
+            {
+                Console.WriteLine("[ERROR]发生未处理的异常，但无法获取异常信息");
+                Console.WriteLine(e.ExceptionObject.ToString());
+            }
+        }
+
+        private void CurrentDomain_ProcessExit(object? sender, EventArgs e)
+        {
+            Console.WriteLine("正在退出...");
+            Console.WriteLine("正在保存日志...");
+            var logs = Directory.GetFiles(AppPath.LogDictionary);
+            if (logs.Length > 10)
+            {
+                foreach (var log in logs.OrderByDescending(x => x).Skip(10))
+                {
+                    File.Delete(log);
+                }
+            }
+            Console.WriteLine("日志保存成功");
         }
 
         private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
@@ -54,6 +89,7 @@ namespace HaloPixelToolBox
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+            TrayIconService.Initilize(DispatcherQueue.GetForCurrentThread());
             MainWindow.Closed += MainWindow_Closed;
             MainWindow.Content = new AppShellPage();
             MainWindow.Activate();
@@ -62,18 +98,8 @@ namespace HaloPixelToolBox
 
         private void MainWindow_Closed(object sender, WindowEventArgs args)
         {
-            Console.WriteLine("正在退出...");
-            Console.WriteLine("正在保存日志...");
-            var logs = Directory.GetFiles(AppPath.LogDictionary);
-            if (logs.Length > 10)
-            {
-                foreach (var log in logs.OrderByDescending(x => x).Skip(10))
-                {
-                    File.Delete(log);
-                }
-            }
-            Console.WriteLine("日志保存成功");
-            Current.Exit();
+            ShowWindow(WindowHelper.GetHwndForCurrentWindow(), SW_HIDE);
+            args.Handled = true;
         }
     }
 }

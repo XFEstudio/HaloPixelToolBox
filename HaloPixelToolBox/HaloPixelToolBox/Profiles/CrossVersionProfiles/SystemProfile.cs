@@ -18,15 +18,25 @@ public partial class SystemProfile : XFEProfile
     [ProfileProperty]
     private bool autoStart = false;
     /// <summary>
-    /// 忽略的版本号
-    /// </summary>
-    [ProfileProperty]
-    private string ignoreVersion = string.Empty;
-    /// <summary>
     /// 启动时最小化到托盘
     /// </summary>
     [ProfileProperty]
     private bool minimizeWhenOpen = false;
+    /// <summary>
+    /// 关闭时最小化到托盘
+    /// </summary>
+    [ProfileProperty]
+    private bool minimizeWhenClose = true;
+    /// <summary>
+    /// 关闭时不再询问
+    /// </summary>
+    [ProfileProperty]
+    private bool neverAskAgainWhenClose = false;
+    /// <summary>
+    /// 忽略的版本号
+    /// </summary>
+    [ProfileProperty]
+    private string ignoreVersion = string.Empty;
 
     static partial void SetThemeProperty(ref ElementTheme value) => AppThemeHelper.ChangeTheme(value);
 }

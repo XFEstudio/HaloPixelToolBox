@@ -11,9 +11,19 @@
 
     <Grid x:Name="mainGrid">
         <ContentDialog x:Name="upgradeDialog" Title="更新新版本" Content="{x:Bind ViewModel.UpgradeContentText, Mode=OneWay}" PrimaryButtonText="更新" SecondaryButtonText="忽略此版本" CloseButtonText="取消" DefaultButton="Primary"/>
+        <ContentDialog x:Name="closeDialog" Title="退出花再工具箱" PrimaryButtonText="确定" SecondaryButtonText="取消" DefaultButton="Primary">
+            <StackPanel Spacing="10" Orientation="Vertical">
+                <TextBlock Text="确认退出工具箱吗？"/>
+                <RadioButtons SelectedIndex="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}">
+                    <RadioButton Content="最小化到托盘" Tag="MinimizeToTray"/>
+                    <RadioButton Content="退出应用" Tag="ExitApp"/>
+                </RadioButtons>
+                <CheckBox Margin="0,20,0,0" Content="记住我的选择，不再询问" IsChecked="{x:Bind ViewModel.NeverAskAgainWhenClose, Mode=TwoWay}"/>
+            </StackPanel>
+        </ContentDialog>
         <Grid x:Name="appTitleBar" Canvas.ZIndex="1" Height="{Binding ElementName=navigationView, Path=CompactPaneLength}" IsHitTestVisible="True" VerticalAlignment="Top">
-            <Image Source="/Assets/icon.png" HorizontalAlignment="Left" Width="16" Height="16"/>
-            <TextBlock Text="HaloPixelToolBox" VerticalAlignment="Center" TextWrapping="NoWrap" Margin="28,0,0,0"/>
+            <Image Source="/Assets/icon.png" HorizontalAlignment="Left" Width="16" Height="16" Margin="10,0,0,0"/>
+            <TextBlock Text="花再音响工具箱" VerticalAlignment="Center" TextWrapping="NoWrap" Margin="38,0,0,0"/>
         </Grid>
         <Grid x:Name="rightPanelGrid" Canvas.ZIndex="2" Margin="0,50,0,0">
             <Grid.TranslationTransition>
@@ -32,17 +42,21 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <NavigationView x:Name="navigationView" IsBackButtonVisible="Visible" Canvas.ZIndex="0" IsBackEnabled="{x:Bind ViewModel.CanGoBack, Mode=OneWay}" IsSettingsVisible="False" DisplayModeChanged="NavigationView_DisplayModeChanged" PaneOpening="NavigationView_PaneOpening" PaneOpened="NavigationView_PaneOpened" PaneClosing="NavigationView_PaneClosing" PaneClosed="NavigationView_PaneClosed">
+        <NavigationView x:Name="navigationView" IsBackButtonVisible="Collapsed" Canvas.ZIndex="0" IsBackEnabled="{x:Bind ViewModel.CanGoBack, Mode=OneWay}" IsSettingsVisible="False" DisplayModeChanged="NavigationView_DisplayModeChanged" PaneOpening="NavigationView_PaneOpening" PaneOpened="NavigationView_PaneOpened" PaneClosing="NavigationView_PaneClosing" PaneClosed="NavigationView_PaneClosed">
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="网易云歌词" add:NavigationAddition.NavigateTo="HaloPixelToolBox.Views.CloudMusicLyricsToolPage">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE8D6;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-            <!--在此处添加导航栏页面-->
+                <!--在此处添加导航栏页面-->
             </NavigationView.MenuItems>
-            
+
             <NavigationView.FooterMenuItems>
+                <StackPanel Orientation="Horizontal" Margin="-4,0,0,0" Spacing="4">
+                    <PersonPicture ProfilePicture="{x:Bind ViewModel.UserTile}" Height="25" Width="25" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{x:Bind ViewModel.UserName, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                </StackPanel>
                 <NavigationViewItem Content="设置" add:NavigationAddition.NavigateTo="HaloPixelToolBox.Views.SettingPage">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE713;"/>

@@ -16,6 +16,7 @@ namespace HaloPixelToolBox;
 public partial class App : Application
 {
     public ITrayIconService TrayIconService { get; } = ServiceManager.GetService<ITrayIconService>();
+    public ICloseWindowService CloseWindowService { get; } = ServiceManager.GetService<ICloseWindowService>();
     /// <summary>
     /// 主页窗口
     /// </summary>
@@ -89,18 +90,13 @@ public partial class App : Application
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
         TrayIconService.Initilize(DispatcherQueue.GetForCurrentThread());
-        MainWindow.Closed += MainWindow_Closed;
+        CloseWindowService.Initialize(MainWindow);
         MainWindow.Content = new AppShellPage();
+        MainWindow.AppWindow.Resize(new(1900, 1400));
         if (SystemProfile.MinimizeWhenOpen)
             MainWindow.AppWindow.Hide();
         else
             MainWindow.Activate();
         AppThemeHelper.MainWindow = MainWindow;
-    }
-
-    private void MainWindow_Closed(object sender, WindowEventArgs args)
-    {
-        Win32Helper.ShowWindow(WindowHelper.GetHwndForCurrentWindow(), Win32Helper.SW_HIDE);
-        args.Handled = true;
     }
 }

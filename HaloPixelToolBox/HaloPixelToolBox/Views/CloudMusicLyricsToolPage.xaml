@@ -20,7 +20,7 @@
 
     <Grid>
         <ScrollView>
-            <StackPanel Orientation="Vertical" Spacing="10">
+            <StackPanel Orientation="Vertical" Spacing="10" Margin="0,0,0,20">
                 <TextBlock Text="设备状态" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
                 <Grid RowSpacing="10" ColumnSpacing="5">
                     <Grid.ColumnDefinitions>

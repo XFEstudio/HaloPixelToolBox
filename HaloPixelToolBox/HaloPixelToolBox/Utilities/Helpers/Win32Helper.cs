@@ -1,5 +1,8 @@
 ﻿using HaloPixelToolBox.Utilities.Helpers.Win32;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace HaloPixelToolBox.Utilities.Helpers;
 
@@ -28,4 +31,17 @@ public static partial class Win32Helper
     [LibraryImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+    [DllImport("shell32.dll", EntryPoint = "#261",
+               CharSet = CharSet.Unicode, PreserveSig = false)]
+    public static extern void GetUserTilePath(string? username, uint whatever, StringBuilder picpath, int maxLength);
+
+    public static string GetUserTilePath(string? username = null)
+    {
+        var sb = new StringBuilder(1000);
+        GetUserTilePath(username, 0x80000000, sb, sb.Capacity);
+        return sb.ToString();
+    }
+
+    public static ImageSource GetUserTile(string? username = null) => new BitmapImage(new Uri(GetUserTilePath(username)));
 }

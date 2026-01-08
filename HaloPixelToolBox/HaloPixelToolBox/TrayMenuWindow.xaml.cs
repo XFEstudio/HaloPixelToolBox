@@ -1,5 +1,3 @@
-using Microsoft.UI.Xaml.Media;
-
 namespace HaloPixelToolBox;
 
 /// <summary>

@@ -23,7 +23,7 @@
     <Grid>
         <ContentDialog x:Name="cleanCacheContentDialog" Title="清除应用缓存" Content="是否清除应用的所有缓存文件（可以定期清理）" IsPrimaryButtonEnabled="True" IsSecondaryButtonEnabled="True" PrimaryButtonText="确定" SecondaryButtonText="取消" DefaultButton="Primary"/>
         <ScrollView>
-            <StackPanel Orientation="Vertical" Spacing="4">
+            <StackPanel Orientation="Vertical" Spacing="4" Margin="0,0,0,20">
                 <TextBlock Text="外观 &amp; 行为" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
                 <controls:SettingsCard Header="色彩模式" Description="软件显示的主题颜色">
                     <controls:SettingsCard.HeaderIcon>

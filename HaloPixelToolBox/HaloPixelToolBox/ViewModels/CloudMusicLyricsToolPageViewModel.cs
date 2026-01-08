@@ -133,7 +133,7 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
                             }
                             Console.WriteLine($"[DEBUG]主循环已退出");
                         }
-                        Console.WriteLine(DeviceReady && CloudMusicReady && EnableCloudMusicLyrics);
+                        Console.WriteLine($"[DEBUG]状态\t音响：{DeviceReady} 软件：{CloudMusicReady} 启用状态：{EnableCloudMusicLyrics}");
                         await Task.Delay(500);
                     }
                     catch (Exception ex)

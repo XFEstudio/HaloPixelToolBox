@@ -9,11 +9,13 @@
     mc:Ignorable="d">
 
     <StackPanel x:Name="panel" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <MenuFlyoutItem Icon="OpenFile" Text="打开主界面" Click="Show_Click"/>
-        <MenuFlyoutItem Text="退出" Click="Exit_Click">
-            <MenuFlyoutItem.Icon>
-                <FontIcon Glyph="&#xE711;"/>
-            </MenuFlyoutItem.Icon>
-        </MenuFlyoutItem>
+        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Padding="20">
+            <Image Source="/Assets/icon.png" HorizontalAlignment="Left" Width="16" Height="16"/>
+            <TextBlock Text="花再音响工具箱" VerticalAlignment="Center"/>
+        </StackPanel>
+        <MenuFlyoutSeparator Margin="10,0"/>
+        <Button Content="打开主界面" Click="Show_Click" HorizontalAlignment="Stretch" Style="{StaticResource SubtleButtonStyle}"/>
+        <MenuFlyoutSeparator Margin="10,0"/>
+        <Button Content="退出" Click="Exit_Click" HorizontalAlignment="Stretch" Style="{StaticResource SubtleButtonStyle}"/>
     </StackPanel>
 </Page>

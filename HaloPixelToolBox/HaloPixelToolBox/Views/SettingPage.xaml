@@ -42,6 +42,12 @@
                     </controls:SettingsCard.HeaderIcon>
                     <ToggleSwitch x:Name="autoStartToggleSwitch" IsOn="{x:Bind ViewModel.IsAutoStartEnable, Mode=TwoWay}"/>
                 </controls:SettingsCard>
+                <controls:SettingsCard Header="自动托盘到右下角" Description="启动软件后自动托盘到右下角">
+                    <controls:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE7E8;"/>
+                    </controls:SettingsCard.HeaderIcon>
+                    <ToggleSwitch x:Name="minimizeWhenOpenToggleSwitch" IsOn="{x:Bind ViewModel.MinimizeWhenOpen, Mode=TwoWay}"/>
+                </controls:SettingsCard>
                 <TextBlock Text="路径 &amp; 存储" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
                 <controls:SettingsCard Header="缓存目录" Description="{x:Bind ViewModel.AppCacheDirectory, Mode=OneWay}" IsClickEnabled="True" Command="{x:Bind ViewModel.OpenPathCommand}" CommandParameter="{x:Bind ViewModel.AppCacheDirectory, Mode=OneWay}">
                     <controls:SettingsCard.ActionIcon>
@@ -74,7 +80,7 @@
                         </controls:SettingsCard>
                         <controls:SettingsCard Header="联系我们" HorizontalContentAlignment="Left" ContentAlignment="Vertical">
                             <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
-                                <HyperlinkButton Content="加入QQ群" NavigateUri="https://qm.qq.com/q/KTw4AZp4CQ"/>
+                                <HyperlinkButton Content="加入QQ群" NavigateUri="https://qm.qq.com/q/VLpyYjWOWe"/>
                                 <HyperlinkButton Content="Github" NavigateUri="https://github.com/XFEstudio"/>
                                 <HyperlinkButton Content="Bilibili主页" NavigateUri="https://space.bilibili.com/200494622"/>
                             </StackPanel>

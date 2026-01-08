@@ -1,16 +1,13 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace HaloPixelToolBox.Utilities.Helpers;
+namespace HaloPixelToolBox.Utilities.Helpers.Win32;
 
-public static partial class Win32Helper
+[StructLayout(LayoutKind.Sequential)]
+public struct MSLLHOOKSTRUCT
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public struct MSLLHOOKSTRUCT
-    {
-        public POINT pt;
-        public uint mouseData;
-        public uint flags;
-        public uint time;
-        public IntPtr dwExtraInfo;
-    }
+    public POINT pt;
+    public uint mouseData;
+    public uint flags;
+    public uint time;
+    public IntPtr dwExtraInfo;
 }

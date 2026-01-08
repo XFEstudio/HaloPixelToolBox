@@ -22,6 +22,11 @@ public partial class SystemProfile : XFEProfile
     /// </summary>
     [ProfileProperty]
     private string ignoreVersion = string.Empty;
+    /// <summary>
+    /// 启动时最小化到托盘
+    /// </summary>
+    [ProfileProperty]
+    private bool minimizeWhenOpen = false;
 
     static partial void SetThemeProperty(ref ElementTheme value) => AppThemeHelper.ChangeTheme(value);
 }

@@ -3,7 +3,6 @@ using HaloPixelToolBox.Profiles.CrossVersionProfiles;
 using HaloPixelToolBox.Utilities;
 using HaloPixelToolBox.Utilities.Helpers;
 using Microsoft.UI.Dispatching;
-using System.Runtime.InteropServices;
 using XFEExtension.NetCore.WinUIHelper.Interface.Services;
 using XFEExtension.NetCore.WinUIHelper.Utilities;
 using XFEExtension.NetCore.WinUIHelper.Utilities.Helper;
@@ -92,13 +91,16 @@ namespace HaloPixelToolBox
             TrayIconService.Initilize(DispatcherQueue.GetForCurrentThread());
             MainWindow.Closed += MainWindow_Closed;
             MainWindow.Content = new AppShellPage();
-            MainWindow.Activate();
+            if (SystemProfile.MinimizeWhenOpen)
+                MainWindow.AppWindow.Hide();
+            else
+                MainWindow.Activate();
             AppThemeHelper.MainWindow = MainWindow;
         }
 
         private void MainWindow_Closed(object sender, WindowEventArgs args)
         {
-            ShowWindow(WindowHelper.GetHwndForCurrentWindow(), SW_HIDE);
+            Win32Helper.ShowWindow(WindowHelper.GetHwndForCurrentWindow(), Win32Helper.SW_HIDE);
             args.Handled = true;
         }
     }

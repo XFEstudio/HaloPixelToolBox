@@ -2,12 +2,9 @@
 
 namespace HaloPixelToolBox.Utilities.Helpers.Win32;
 
-public static partial class Win32Helper
+[StructLayout(LayoutKind.Sequential)]
+public struct POINT
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public struct POINT
-    {
-        public int x;
-        public int y;
-    }
+    public int x;
+    public int y;
 }

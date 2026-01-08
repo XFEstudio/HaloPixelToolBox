@@ -1,8 +1,10 @@
+using HaloPixelToolBox.Interface.Services;
 using HaloPixelToolBox.Utilities.Helpers;
 using HaloPixelToolBox.Utilities.Helpers.Win32;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Windows.Graphics;
+using XFEExtension.NetCore.WinUIHelper.Utilities;
 
 namespace HaloPixelToolBox.Views;
 
@@ -46,15 +48,15 @@ public sealed partial class TrayMenuPage : Page
         MenuWindow.AppWindow.Move(new PointInt32(Cursor.Position.X + 5, Cursor.Position.Y - h + 10));
     }
 
-    private void Show_Click(object sender, RoutedEventArgs e)
+    private void Show_Click(object _, RoutedEventArgs __)
     {
-        App.Tray?.ShowWindow();
+        ServiceManager.GetGlobalService<ITrayIconService>()?.ShowWindow();
         MenuWindow.Close();
     }
 
-    private void Exit_Click(object sender, RoutedEventArgs e)
+    private void Exit_Click(object _, RoutedEventArgs __)
     {
-        App.Tray?.ExitApp();
+        ServiceManager.GetGlobalService<ITrayIconService>()?.ExitApp();
     }
 
     void InstallMouseHook()
@@ -65,27 +67,31 @@ public sealed partial class TrayMenuPage : Page
 
     IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
     {
-        if (nCode >= 0 && wParam == Win32Helper.WM_LBUTTONDOWN)
+        try
         {
-            var hook = Marshal.PtrToStructure<Win32Helper.MSLLHOOKSTRUCT>(lParam);
-            var pt = hook.pt;
-
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MenuWindow);
-            GetWindowRect(hwnd, out RECT rect);
-
-            bool inside =
-                pt.x >= rect.Left && pt.x <= rect.Right &&
-                pt.y >= rect.Top && pt.y <= rect.Bottom;
-
-            if (!inside)
+            if (nCode >= 0 && wParam == Win32Helper.WM_LBUTTONDOWN)
             {
-                DispatcherQueue.TryEnqueue(() =>
+                var hook = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
+                var pt = hook.pt;
+
+                var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MenuWindow);
+                Win32Helper.GetWindowRect(hwnd, out RECT rect);
+
+                bool inside =
+                    pt.x >= rect.Left && pt.x <= rect.Right &&
+                    pt.y >= rect.Top && pt.y <= rect.Bottom;
+
+                if (!inside)
                 {
-                    MenuWindow.Close();
-                });
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        MenuWindow.Close();
+                    });
+                }
             }
         }
+        catch { }
 
-        return CallNextHookEx(_mouseHook, nCode, wParam, lParam);
+        return Win32Helper.CallNextHookEx(_mouseHook, nCode, wParam, lParam);
     }
 }

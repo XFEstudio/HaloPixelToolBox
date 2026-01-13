@@ -1,8 +1,8 @@
 ﻿using HaloPixelToolBox.Interface.Services;
 using HaloPixelToolBox.Profiles.CrossVersionProfiles;
 using HaloPixelToolBox.Utilities;
-using HaloPixelToolBox.Utilities.Helpers;
 using Microsoft.UI.Dispatching;
+using Microsoft.Windows.AppLifecycle;
 using XFEExtension.NetCore.WinUIHelper.Interface.Services;
 using XFEExtension.NetCore.WinUIHelper.Utilities;
 using XFEExtension.NetCore.WinUIHelper.Utilities.Helper;
@@ -28,6 +28,13 @@ public partial class App : Application
     /// </summary>
     public App()
     {
+        var keyInstance = AppInstance.FindOrRegisterForKey("MainInstance");
+        if (!keyInstance.IsCurrent)
+        {
+            keyInstance.RedirectActivationToAsync(AppInstance.GetCurrent().GetActivatedEventArgs()).AsTask().Wait();
+            Environment.Exit(0);
+            return;
+        }
         XFEConsole.UseXFEConsoleLog();
         XFEConsole.Log.LogPath = Path.Combine(AppPath.LogDictionary, XFEConsole.Log.LogPath);
         Console.WriteLine("正在初始化应用程序...");
@@ -41,6 +48,21 @@ public partial class App : Application
         UnhandledException += App_UnhandledException;
         AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        AppInstance.GetCurrent().Activated += App_Activated;
+        Console.WriteLine("事件订阅完成");
+    }
+
+    private void App_Activated(object? sender, AppActivationArguments e)
+    {
+        if (e.Kind == ExtendedActivationKind.Launch)
+        {
+            MainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                if (SystemProfile.MinimizeWhenOpen)
+                    MainWindow.AppWindow.Show();
+                MainWindow.Activate();
+            });
+        }
     }
 
     private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
@@ -89,6 +111,7 @@ public partial class App : Application
     /// <param name="args">Details about the launch request and process.</param>
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
+        Console.WriteLine("主窗体启动中...");
         TrayIconService.Initilize(DispatcherQueue.GetForCurrentThread());
         CloseWindowService.Initialize(MainWindow);
         MainWindow.Content = new AppShellPage();
@@ -98,5 +121,6 @@ public partial class App : Application
         else
             MainWindow.Activate();
         AppThemeHelper.MainWindow = MainWindow;
+        Console.WriteLine("主窗体启动完成");
     }
 }

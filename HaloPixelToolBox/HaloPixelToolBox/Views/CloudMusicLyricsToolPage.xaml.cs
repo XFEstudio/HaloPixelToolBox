@@ -13,6 +13,7 @@ public sealed partial class CloudMusicLyricsToolPage : Page
     public CloudMusicLyricsToolPageViewModel ViewModel { get; set; } = new();
     public CloudMusicLyricsToolPage()
     {
+        Console.WriteLine("网易云歌词工具页面初始化中...");
         Current = this;
         InitializeComponent();
         ViewModel.AutoNavigationParameterService.Initialize(this);
@@ -21,10 +22,12 @@ public sealed partial class CloudMusicLyricsToolPage : Page
         ViewModel.SettingService.Initialize();
         ViewModel.SettingService.RegisterEvents();
         NavigationCacheMode = NavigationCacheMode.Enabled;
+        Console.WriteLine("网易云歌词工具页面初始化完成");
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
+        Console.WriteLine("导航至网易云歌词工具页面");
         ViewModel.AutoNavigationParameterService.OnParameterChange(e.Parameter);
     }
 }

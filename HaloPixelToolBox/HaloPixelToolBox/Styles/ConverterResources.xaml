@@ -10,5 +10,6 @@
     <converter:DateTimeOffsetConverter x:Key="DateTimeOffsetConverter"/>
     <converter:EmptyStringConverter x:Key="EmptyStringConverter"/>
     <innerconverter:StringEmptyVisibilityConverter x:Key="StringEmptyVisibilityConverter"/>
+    <innerconverter:StringEmptyBooleanConverter x:Key="StringEmptyBooleanConverter"/>
     <innerconverter:BooleanInverseConverter x:Key="BooleanInverseConverter"/>
 </ResourceDictionary>

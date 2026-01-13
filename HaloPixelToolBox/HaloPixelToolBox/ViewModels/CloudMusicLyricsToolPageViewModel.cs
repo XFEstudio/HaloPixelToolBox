@@ -36,23 +36,33 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
 
     public CloudMusicLyricsToolPageViewModel()
     {
-        _ = Task.WhenAll(new List<Task>
+        Console.WriteLine("准备启动网易云后台线程");
+        Task.Run(async () =>
         {
-            Task.Run(async () =>
+            try
             {
                 Console.WriteLine("正在搜索花再设备...");
                 while (!DeviceReady)
                 {
                     var ready = Device.Initialize();
                     AutoNavigationParameterService.CurrentPage?.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        DeviceReady = ready;
-                    });
+                        {
+                            DeviceReady = ready;
+                        });
                     await Task.Delay(500);
                 }
                 Console.WriteLine("花再设备已连接");
-            }),
-            Task.Run(async () =>
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR]搜索花再设备时发生错误：{ex.Message}");
+                Console.WriteLine($"[TRACE]{ex.StackTrace}");
+            }
+
+        });
+        Task.Run(async () =>
+        {
+            try
             {
                 Console.WriteLine("正在搜索云音乐...");
                 while (!CloudMusicReady)
@@ -66,83 +76,99 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
                     await Task.Delay(500);
                 }
                 Console.WriteLine("云音乐已准备就绪");
-            }),
-            Task.Run(async () =>
+            }
+            catch (Exception ex)
             {
-                while (true)
+                Console.WriteLine($"[ERROR]搜索云音乐时发生错误：{ex.Message}");
+                Console.WriteLine($"[TRACE]{ex.StackTrace}");
+            }
+        });
+        Task.Run(async () =>
+        {
+            Console.WriteLine("启动云音乐地址重解析线程");
+            while (true)
+            {
+                try
                 {
                     Reader.ReresolveAddress();
                     await Task.Delay(500);
                 }
-            }),
-            Task.Run(async () =>
-            {
-                while (true)
+                catch (Exception ex)
                 {
-                    bool isClockUI = false;
-                    int time = 0;
-                    try
+                    Console.WriteLine($"[ERROR]云音乐地址重解析线程发生错误：{ex.Message}");
+                    Console.WriteLine($"[TRACE]{ex.StackTrace}");
+                }
+            }
+        });
+        Task.Run(async () =>
+        {
+            Console.WriteLine("启动网易云歌词主线程");
+            while (true)
+            {
+                bool isClockUI = false;
+                int time = 0;
+                try
+                {
+                    if (DeviceReady && CloudMusicReady && EnableCloudMusicLyrics)
                     {
-                        if (DeviceReady && CloudMusicReady && EnableCloudMusicLyrics)
+                        Console.WriteLine("[DEBUG]设备均在线，准备进入主循环");
+                        string lastRead = string.Empty;
+                        bool scrolled = false;
+                        while (true)
                         {
-                            Console.WriteLine("[DEBUG]设备均在线，准备进入主循环");
-                            string lastRead = string.Empty;
-                            bool scrolled = false;
-                            while (true)
+                            try
                             {
-                                try
+                                if (!DeviceReady || !CloudMusicReady || !EnableCloudMusicLyrics)
+                                    break;
+                                if (Reader.TryReadLyrics(out var lyrics) && lastRead != lyrics)
                                 {
-                                    if (!DeviceReady || !CloudMusicReady || !EnableCloudMusicLyrics)
-                                        break;
-                                    if (Reader.TryReadLyrics(out var lyrics) && lastRead != lyrics)
+                                    Console.WriteLine($"已读取到歌词：{lyrics}");
+                                    lastRead = lyrics;
+                                    isClockUI = false;
+                                    time = 0;
+                                    if (scrolled)
                                     {
-                                        Console.WriteLine($"已读取到歌词：{lyrics}");
-                                        lastRead = lyrics;
-                                        isClockUI = false;
-                                        time = 0;
-                                        if (scrolled)
-                                        {
-                                            Device.ShowText(string.Empty);
-                                            await Task.Delay(100);
-                                            scrolled = false;
-                                        }
-                                        Device.SetTextLayout(CloudMusicLyricsProfile.DefaultHaloPixelTextLayout);
-                                        Device.ShowText(lyrics);
-                                        Debug.WriteLine(lyrics.DisplayLength());
-                                        if (lyrics.DisplayLength() > 30)
-                                        {
-                                            scrolled = true;
-                                            await Task.Delay(500);
-                                            Device.SetTextLayout(Core.Models.HaloPixelTextLayout.ScrollRightToLeft);
-                                        }
+                                        Device.ShowText(string.Empty);
+                                        await Task.Delay(100);
+                                        scrolled = false;
                                     }
-                                    await Task.Delay(50);
-                                    time += 50;
-                                    if (!isClockUI && time >= CloudMusicLyricsProfile.SwitchBackTimeout * 1000)
+                                    Device.SetTextLayout(CloudMusicLyricsProfile.DefaultHaloPixelTextLayout);
+                                    Device.ShowText(lyrics);
+                                    Debug.WriteLine(lyrics.DisplayLength());
+                                    if (lyrics.DisplayLength() > 30)
                                     {
-                                        isClockUI = true;
-                                        Device.SetUIModel(CloudMusicLyricsProfile.DefaultHaloPixelUIModel);
-                                        Console.WriteLine("已切换至时钟界面");
+                                        scrolled = true;
+                                        await Task.Delay(500);
+                                        Device.SetTextLayout(Core.Models.HaloPixelTextLayout.ScrollRightToLeft);
                                     }
                                 }
-                                catch(Exception ex)
+                                await Task.Delay(50);
+                                time += 50;
+                                if (!isClockUI && time >= CloudMusicLyricsProfile.SwitchBackTimeout * 1000)
                                 {
-                                    Console.WriteLine($"[ERROR]{ex.Message}");
-                                    Console.WriteLine($"[TRACE]{ex.StackTrace}");
+                                    isClockUI = true;
+                                    Device.SetUIModel(CloudMusicLyricsProfile.DefaultHaloPixelUIModel);
+                                    Console.WriteLine("已切换至时钟界面");
                                 }
                             }
-                            Console.WriteLine($"[DEBUG]主循环已退出");
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"[ERROR]网易云歌词主循环发生错误：{ex.Message}");
+                                Console.WriteLine($"[TRACE]{ex.StackTrace}");
+                            }
                         }
-                        Console.WriteLine($"[DEBUG]状态\t音响：{DeviceReady} 软件：{CloudMusicReady} 启用状态：{EnableCloudMusicLyrics}");
-                        await Task.Delay(500);
+                        Console.WriteLine($"[DEBUG]主循环已退出");
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"[ERROR]{ex.Message}");
-                        Console.WriteLine($"[TRACE]{ex.StackTrace}");
-                    }
+                    Console.WriteLine($"[DEBUG]状态\t音响：{DeviceReady} 软件：{CloudMusicReady} 启用状态：{EnableCloudMusicLyrics}");
+                    await Task.Delay(500);
                 }
-            })
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR]网易云歌词主线程发生错误：{ex.Message}");
+                    Console.WriteLine($"[TRACE]{ex.StackTrace}");
+                }
+            }
         });
+        Console.WriteLine("网易云后台线程启动完成");
     }
 }

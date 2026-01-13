@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HaloPixelToolBox.Core.Utilities.Helpers;
+using HaloPixelToolBox.Interface.Services;
 using HaloPixelToolBox.Profiles.CrossVersionProfiles;
 using HaloPixelToolBox.Utilities;
 using Microsoft.Win32;
@@ -17,7 +18,7 @@ public partial class SettingPageViewModel : ViewModelBase
     [ObservableProperty]
     bool isAutoStartEnable = SystemProfile.AutoStart;
     [ObservableProperty]
-    private bool minimizeWhenOpen  = SystemProfile.MinimizeWhenOpen;
+    private bool minimizeWhenOpen = SystemProfile.MinimizeWhenOpen;
     [ObservableProperty]
     string appCacheDirectory = AppPathHelper.AppCache;
     [ObservableProperty]
@@ -32,6 +33,8 @@ public partial class SettingPageViewModel : ViewModelBase
     string appLogSize = FileHelper.GetDirectorySize(new(AppPath.LogDictionary)).FileSize();
     [ObservableProperty]
     private string currentVersion = Assembly.GetEntryAssembly()?.GetName().Version is Version version ? version.ToString(3) : "无法获取版本信息";
+    [ObservableProperty]
+    private string ignoreVersion = SystemProfile.IgnoreVersion;
     public ISettingService SettingService { get; set; } = ServiceManager.GetService<ISettingService>();
     public IDialogService DialogService { get; set; } = ServiceManager.GetService<IDialogService>();
 
@@ -40,6 +43,8 @@ public partial class SettingPageViewModel : ViewModelBase
         SystemProfile.AutoStart = value;
         SetAutoStart(value);
     }
+
+    partial void OnIgnoreVersionChanged(string value) => SystemProfile.IgnoreVersion = value;
 
     partial void OnMinimizeWhenOpenChanged(bool value) => SystemProfile.MinimizeWhenOpen = value;
 
@@ -77,4 +82,10 @@ public partial class SettingPageViewModel : ViewModelBase
             AppCacheSize = FileHelper.GetDirectorySize(new(AppPathHelper.AppCache)).FileSize();
         }
     }
+
+    [RelayCommand]
+    void ClearIgnoreVersion() => IgnoreVersion = string.Empty;
+
+    [RelayCommand]
+    static async Task CheckUpgrade() => await ServiceManager.GetGlobalService<IUpgradeService>()!.CheckUpgrade();
 }

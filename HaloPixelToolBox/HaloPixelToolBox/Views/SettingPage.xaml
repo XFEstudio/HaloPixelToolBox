@@ -48,6 +48,20 @@
                     </controls:SettingsCard.HeaderIcon>
                     <ToggleSwitch x:Name="minimizeWhenOpenToggleSwitch" IsOn="{x:Bind ViewModel.MinimizeWhenOpen, Mode=TwoWay}"/>
                 </controls:SettingsCard>
+                <TextBlock Text="下载 &amp; 更新" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
+                <controls:SettingsCard Header="检查新的更新" Description="检查是否有新的更新">
+                    <Button Content="检查更新" Command="{x:Bind ViewModel.CheckUpgradeCommand}"/>
+                </controls:SettingsCard>
+                <controls:SettingsCard Header="忽略的版本号" Description="忽略该次更新的版本号">
+                    <Grid ColumnSpacing="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind ViewModel.IgnoreVersion, Mode=OneWay}" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" Content="删除" IsEnabled="{x:Bind ViewModel.IgnoreVersion, Mode=OneWay, Converter={StaticResource StringEmptyBooleanConverter}, ConverterParameter='inverse'}" Command="{x:Bind ViewModel.ClearIgnoreVersionCommand}"/>
+                    </Grid>
+                </controls:SettingsCard>
                 <TextBlock Text="路径 &amp; 存储" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
                 <controls:SettingsCard Header="缓存目录" Description="{x:Bind ViewModel.AppCacheDirectory, Mode=OneWay}" IsClickEnabled="True" Command="{x:Bind ViewModel.OpenPathCommand}" CommandParameter="{x:Bind ViewModel.AppCacheDirectory, Mode=OneWay}">
                     <controls:SettingsCard.ActionIcon>
@@ -69,7 +83,7 @@
                     <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind ViewModel.AppLogSize, Mode=OneWay}" VerticalAlignment="Center"/>
                 </controls:SettingsCard>
                 <TextBlock Text="关于" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
-                <controls:SettingsExpander Header="花再工具箱" Description="© 2025 XFEstudio 保留所有权利">
+                <controls:SettingsExpander Header="花再工具箱" Description="版权所有 © 2025 XFEstudio. All rights reserved">
                     <controls:SettingsExpander.HeaderIcon>
                         <ImageIcon Source="/Assets/icon.png"/>
                     </controls:SettingsExpander.HeaderIcon>

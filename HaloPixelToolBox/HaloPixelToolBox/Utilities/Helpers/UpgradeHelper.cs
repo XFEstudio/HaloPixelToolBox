@@ -7,7 +7,7 @@ namespace HaloPixelToolBox.Utilities.Helpers;
 
 public static class UpgradeHelper
 {
-    public static string RequestAddress => "http://***REMOVED***/upgrade";
+    public static string RequestAddress => "http://upgrade.api.xfegzs.com/upgrade";
     public static Upgrader Upgrader { get; set; } = new(RequestAddress);
     public static Version Version => Assembly.GetExecutingAssembly().GetName().Version ?? new Version(1, 0, 0);
 

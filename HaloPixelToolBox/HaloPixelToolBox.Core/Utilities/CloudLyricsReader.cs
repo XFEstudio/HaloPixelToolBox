@@ -20,7 +20,16 @@ public class CloudMusicLyricsReader
             Editor.CurrentProcess = process;
             VersionInfo = FileVersionInfo.GetVersionInfo(process.MainModule?.FileName ?? string.Empty);
             Version = new Version(VersionInfo?.FileVersion ?? "0.0.0.0");
-            Console.WriteLine($"[DEBUG]版本信息：{VersionInfo?.FileVersion}|{Version.ToString(3)}");
+            try
+            {
+                Console.WriteLine($"[DEBUG]版本信息：{VersionInfo?.FileVersion}");
+                Console.WriteLine($"[DEBUG]版本信息缩略：{Version.ToString(3)}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR]版本输出异常：{ex.Message}");
+                Console.WriteLine($"[TRACE]{ex.StackTrace}");
+            }
             return ReresolveAddress();
         }
         else
@@ -47,6 +56,9 @@ public class CloudMusicLyricsReader
             nint address = 0;
             switch (Version.ToString(3))
             {
+                case "3.1.27":
+                    address = Editor.ResolvePointerAddress("cloudmusic.dll", 0x01DDE290, 0xE0, 0x8, 0xE8, 0x38, 0x118, 0x8, 0x0);
+                    break;
                 case "3.1.26":
                     address = Editor.ResolvePointerAddress("cloudmusic.dll", 0x01DD5130, 0xE8, 0x38, 0x120, 0x18, 0x0);
                     break;
@@ -70,7 +82,7 @@ public class CloudMusicLyricsReader
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"[ERROR]{ex.Message}");
+            Console.WriteLine($"[ERROR]解析地址异常：{ex.Message}");
             Console.WriteLine($"[TRACE]{ex.StackTrace}");
             return false;
         }

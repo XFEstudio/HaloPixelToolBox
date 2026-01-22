@@ -8,9 +8,16 @@ namespace HaloPixelToolBox.Core.Utilities;
 public class CloudMusicLyricsReader
 {
     public nint Address { get; set; }
+    public bool UseInputedAddress { get; set; }
     public FileVersionInfo? VersionInfo { get; set; }
     public Version Version { get; set; } = new();
     public MemoryEditor Editor { get; set; } = new();
+    public static Dictionary<string, Func<MemoryEditor, nint>> VersionResolverDictionary { get; } = new()
+    {
+        { "3.1.27", editor => editor.ResolvePointerAddress("cloudmusic.dll", 0x01DDE290, 0xE0, 0x8, 0xE8, 0x38, 0x118, 0x8, 0x0) },
+        { "3.1.26", editor => editor.ResolvePointerAddress("cloudmusic.dll", 0x01DD5130, 0xE8, 0x38, 0x120, 0x18, 0x0) },
+        { "3.1.25", editor => editor.ResolvePointerAddress("cloudmusic.dll", 0x01DAFF60, 0xE0, 0x8, 0x128, 0x18, 0x0) },
+    };
 
     public bool Initialize()
     {
@@ -41,33 +48,35 @@ public class CloudMusicLyricsReader
     public bool TryReadLyrics(out string lyrics)
     {
         lyrics = "无法读取歌词";
-        if (Editor.ReadMemory(Address, 200, out var buffer))
+        try
         {
-            lyrics = Encoding.Unicode.GetString(buffer, 0, GetValidLength(buffer));
-            return true;
+            if (Editor.ReadMemory(Address, 200, out var buffer))
+            {
+                lyrics = Encoding.Unicode.GetString(buffer, 0, GetValidLength(buffer));
+                return true;
+            }
         }
-        else return false;
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[ERROR]读取歌词异常：{ex.Message}");
+            Console.WriteLine($"[TRACE]{ex.StackTrace}");
+        }
+        return false;
     }
 
     public bool ReresolveAddress()
     {
         try
         {
+            if (Version.MajorRevision == 0)
+                return false;
+            if (UseInputedAddress)
+                return true;
             nint address = 0;
-            switch (Version.ToString(3))
-            {
-                case "3.1.27":
-                    address = Editor.ResolvePointerAddress("cloudmusic.dll", 0x01DDE290, 0xE0, 0x8, 0xE8, 0x38, 0x118, 0x8, 0x0);
-                    break;
-                case "3.1.26":
-                    address = Editor.ResolvePointerAddress("cloudmusic.dll", 0x01DD5130, 0xE8, 0x38, 0x120, 0x18, 0x0);
-                    break;
-                case "3.1.25":
-                    address = Editor.ResolvePointerAddress("cloudmusic.dll", 0x01DAFF60, 0xE0, 0x8, 0x128, 0x18, 0x0);
-                    break;
-                default:
-                    break;
-            }
+            if (VersionResolverDictionary.TryGetValue(Version.ToString(3), out var resolver))
+                address = resolver(Editor);
+            else
+                Console.WriteLine($"[WARN]未找到匹配的版本解析器，当前版本：{Version}");
             if (address != Address)
                 Console.WriteLine($"[DEBUG]读取到新的地址：{address}({address:X})");
             if (address != 0)

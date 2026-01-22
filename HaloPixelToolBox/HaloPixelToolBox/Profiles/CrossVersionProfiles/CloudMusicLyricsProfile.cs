@@ -23,6 +23,16 @@ public partial class CloudMusicLyricsProfile : XFEProfile
     [ProfileProperty]
     private bool switchBackWhenPause = true;
     /// <summary>
+    /// 使用输入的内存地址
+    /// </summary>
+    [ProfileProperty]
+    private bool useInputedAddress = false;
+    /// <summary>
+    /// 输入的内存地址
+    /// </summary>
+    [ProfileProperty]
+    private string inputedAddress = string.Empty;
+    /// <summary>
     /// 默认歌词显示布局
     /// </summary>
     [ProfileProperty]

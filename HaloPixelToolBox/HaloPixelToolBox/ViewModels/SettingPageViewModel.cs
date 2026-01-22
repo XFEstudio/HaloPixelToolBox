@@ -6,6 +6,7 @@ using HaloPixelToolBox.Profiles.CrossVersionProfiles;
 using HaloPixelToolBox.Utilities;
 using Microsoft.Win32;
 using System.Reflection;
+using Windows.System;
 using XFEExtension.NetCore.FileExtension;
 using XFEExtension.NetCore.WinUIHelper.Interface.Services;
 using XFEExtension.NetCore.WinUIHelper.Utilities;
@@ -15,6 +16,8 @@ namespace HaloPixelToolBox.ViewModels;
 
 public partial class SettingPageViewModel : ViewModelBase
 {
+    [ObservableProperty]
+    private int closeButtonActionIndex = SystemProfile.MinimizeWhenClose ? 0 : 1;
     [ObservableProperty]
     bool isAutoStartEnable = SystemProfile.AutoStart;
     [ObservableProperty]
@@ -37,6 +40,8 @@ public partial class SettingPageViewModel : ViewModelBase
     private string ignoreVersion = SystemProfile.IgnoreVersion;
     public ISettingService SettingService { get; set; } = ServiceManager.GetService<ISettingService>();
     public IDialogService DialogService { get; set; } = ServiceManager.GetService<IDialogService>();
+
+    partial void OnCloseButtonActionIndexChanged(int value) => SystemProfile.MinimizeWhenClose = value == 0;
 
     partial void OnIsAutoStartEnableChanged(bool value)
     {
@@ -82,6 +87,12 @@ public partial class SettingPageViewModel : ViewModelBase
             AppCacheSize = FileHelper.GetDirectorySize(new(AppPathHelper.AppCache)).FileSize();
         }
     }
+
+    [RelayCommand]
+    static async Task LinkToGithubRepo() => await Launcher.LaunchUriAsync(new Uri("https://github.com/XFEstudio/HaloPixelToolBox"));
+
+    [RelayCommand]
+    static async Task LinkToGithubIssue() => await Launcher.LaunchUriAsync(new Uri("https://github.com/XFEstudio/HaloPixelToolBox/issues/new/choose"));
 
     [RelayCommand]
     void ClearIgnoreVersion() => IgnoreVersion = string.Empty;

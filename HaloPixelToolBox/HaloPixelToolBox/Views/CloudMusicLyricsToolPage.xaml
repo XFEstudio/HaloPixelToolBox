@@ -42,7 +42,7 @@
                         <Border CornerRadius="90" Height="25" Width="25" Visibility="{x:Bind ViewModel.CloudMusicReady, Mode=OneWay}" Background="{ThemeResource SystemFillColorSuccessBrush}"/>
                     </Grid>
                 </Grid>
-                <TextBlock Text="网易云版本 (当前支持版本3.1.26)" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind ViewModel.SupportedVersion, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter='网易云版本 (当前支持版本 (0) )'}" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
                 <TextBlock Text="{x:Bind ViewModel.CloudMusicVersion, Mode=OneWay}" Style="{StaticResource BodyTextBlockStyle}"/>
                 <TextBlock Text="启用状态" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
                 <controls:SettingsCard Header="启用歌词同步" Description="启用后，网易云的歌词会实时显示在花再 Halo Pixel 音响上">

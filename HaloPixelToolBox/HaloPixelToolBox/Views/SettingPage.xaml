@@ -44,9 +44,18 @@
                 </controls:SettingsCard>
                 <controls:SettingsCard Header="自动托盘到右下角" Description="启动软件后自动托盘到右下角">
                     <controls:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xE7E8;"/>
+                        <FontIcon Glyph="&#xE944;"/>
                     </controls:SettingsCard.HeaderIcon>
                     <ToggleSwitch x:Name="minimizeWhenOpenToggleSwitch" IsOn="{x:Bind ViewModel.MinimizeWhenOpen, Mode=TwoWay}"/>
+                </controls:SettingsCard>
+                <controls:SettingsCard Header="软件退出" Description="点击退出软件时的操作">
+                    <controls:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE89F;"/>
+                    </controls:SettingsCard.HeaderIcon>
+                    <ComboBox SelectedIndex="{x:Bind ViewModel.CloseButtonActionIndex, Mode=TwoWay}">
+                        <ComboBoxItem Content="最小化到右下角托盘区"/>
+                        <ComboBoxItem Content="直接退出程序"/>
+                    </ComboBox>
                 </controls:SettingsCard>
                 <TextBlock Text="下载 &amp; 更新" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"/>
                 <controls:SettingsCard Header="检查新的更新" Description="检查是否有新的更新">
@@ -91,6 +100,16 @@
                     <controls:SettingsExpander.Items>
                         <controls:SettingsCard Header="作者">
                             <TextBlock Text="XFEstudio" Foreground="{ThemeResource TextFillColorSecondary}"/>
+                        </controls:SettingsCard>
+                        <controls:SettingsCard Header="问题反馈 &amp; 建议" IsClickEnabled="True" Command="{x:Bind ViewModel.LinkToGithubIssueCommand}">
+                            <controls:SettingsCard.ActionIcon>
+                                <FontIcon Glyph="&#xE8A7;"/>
+                            </controls:SettingsCard.ActionIcon>
+                        </controls:SettingsCard>
+                        <controls:SettingsCard Header="Github仓库" IsClickEnabled="True" Command="{x:Bind ViewModel.LinkToGithubRepoCommand}">
+                            <controls:SettingsCard.ActionIcon>
+                                <FontIcon Glyph="&#xE8A7;"/>
+                            </controls:SettingsCard.ActionIcon>
                         </controls:SettingsCard>
                         <controls:SettingsCard Header="联系我们" HorizontalContentAlignment="Left" ContentAlignment="Vertical">
                             <StackPanel Margin="-12,0,0,0" Orientation="Vertical">

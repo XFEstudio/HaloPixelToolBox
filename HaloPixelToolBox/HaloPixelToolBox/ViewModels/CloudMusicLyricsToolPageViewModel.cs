@@ -23,6 +23,8 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
     private int switchBackTimeout = CloudMusicLyricsProfile.SwitchBackTimeout;
     [ObservableProperty]
     private string cloudMusicVersion = string.Empty;
+    [ObservableProperty]
+    private string supportedVersion = CloudMusicLyricsReader.VersionResolverDictionary.Keys.FirstOrDefault() ?? string.Empty;
     public HaloPixelDevice Device { get; set; } = new();
     public CloudMusicLyricsReader Reader { get; set; } = new();
 

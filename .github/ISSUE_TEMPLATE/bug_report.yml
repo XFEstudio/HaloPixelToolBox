@@ -1,0 +1,86 @@
+name: 🐞 Bug 报告
+description: 报告花再具箱中遇到的问题
+title: "[Bug] 标题"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你为 **花再具箱** 提交 Bug 🙏  
+        请尽量填写完整信息，这有助于更快定位问题。
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 清晰、简要地描述你遇到的问题
+      placeholder: 程序在……情况下发生了什么？
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 请按步骤描述如何复现该问题
+      placeholder: |
+        1. 打开花再具箱
+        2. 点击 …
+        3. 出现错误
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为
+      placeholder: 正常情况下应该发生什么？
+    validations:
+      required: false
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为
+      placeholder: 实际发生了什么？
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: 软件版本
+      description: 花再具箱的版本号
+      placeholder: v1.2.3
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: 操作系统
+      options:
+        - Windows 11
+        - Windows 10
+        - macOS
+        - Linux
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志 / 报错信息
+      description: 如有异常信息或日志，请粘贴在这里
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 补充说明
+      description: 任何你认为有帮助的信息
+    validations:
+      required: false

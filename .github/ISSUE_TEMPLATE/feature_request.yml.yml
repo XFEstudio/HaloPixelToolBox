@@ -1,0 +1,55 @@
+name: ✨ 功能需求
+description: 为花再具箱提出新功能或改进建议
+title: "[Feature] 标题"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        你对 **花再具箱** 的想法非常重要 🌱  
+        请尽量描述清楚你的需求和使用场景。
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 需求背景
+      description: 当前遇到了什么问题或不便？
+      placeholder: 我在使用花再具箱时，经常需要……
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 期望的解决方案
+      description: 你希望这个功能如何工作？
+      placeholder: 希望能够新增一个……，用来……
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 可选方案
+      description: 是否考虑过其他替代方案？
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 你认为的重要程度
+      options:
+        - 非常重要（影响核心使用）
+        - 比较重要（明显提升体验）
+        - 一般（锦上添花）
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 补充说明
+      description: 相关截图、示例或其他想法
+    validations:
+      required: false

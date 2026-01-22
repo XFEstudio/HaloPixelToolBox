@@ -1,0 +1,69 @@
+name: Greetings
+
+on:
+  pull_request:
+    types:
+      - opened
+  issues:
+    types:
+      - opened
+
+jobs:
+  greeting:
+    name: Greet First-Time Contributors
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/first-interaction@1c4688942c71f71d4f5502a26ea67c331730fa4d # v3.1.0
+        with:
+          issue_message: |
+            # 👋 欢迎
+            
+            ## 感谢你第一次为 **花再具箱** 提交 Issue！
+            
+            你的反馈对这个项目非常重要，无论是 🐞 Bug 报告 还是 ✨ 功能建议，都会帮助花再具箱变得更好。
+
+            ---
+            
+            在处理之前，可能会有这些情况之一：
+            - 🔍 需要进一步确认或复现问题
+            - 🧠 讨论实现方式或优先级
+            - 🛠 已加入后续版本的开发计划
+            
+            如果你能补充：
+            - 使用场景 / 复现步骤
+            - 软件版本 / 系统环境
+            - 相关截图或日志  
+            
+            那会非常有助于问题的定位 🙏
+
+            ---
+            
+            ### 我们已收到你提交的问题
+            
+            ### 再次感谢你的参与，欢迎随时继续反馈想法！
+
+          pr_message: |
+            # 👋 欢迎
+            ## 🎉 感谢你第一次为 **花再具箱** 提交 Pull Request！
+            
+            能看到你愿意直接参与代码贡献，真的非常开心 🙌  
+            你的修改会被认真 Review，如果需要调整或补充说明，也会在评论中和你一起讨论。
+
+            ---
+            
+            在合并前，可能会关注以下几点：
+            - ✅ 功能是否符合项目方向
+            - 🧪 是否影响现有功能
+            - 🧹 代码风格与可维护性
+            
+            如果这是一次探索性或未完成的尝试，也完全没问题，可以在描述里说明你的想法 👍
+
+            ---
+            
+            ### 我们已收到你提交的问题
+            
+            ### 再次感谢你的贡献，期待与你一起把花再具箱做得更好！

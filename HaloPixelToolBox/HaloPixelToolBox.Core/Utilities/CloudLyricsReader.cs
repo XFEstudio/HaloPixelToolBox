@@ -8,6 +8,7 @@ namespace HaloPixelToolBox.Core.Utilities;
 public class CloudMusicLyricsReader
 {
     public nint Address { get; set; }
+    public bool UseInputedAddress { get; set; }
     public FileVersionInfo? VersionInfo { get; set; }
     public Version Version { get; set; } = new();
     public MemoryEditor Editor { get; set; } = new();
@@ -69,6 +70,8 @@ public class CloudMusicLyricsReader
         {
             if (Version.MajorRevision == 0)
                 return false;
+            if (UseInputedAddress)
+                return true;
             nint address = 0;
             if (VersionResolverDictionary.TryGetValue(Version.ToString(3), out var resolver))
                 address = resolver(Editor);

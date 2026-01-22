@@ -20,17 +20,33 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
     [ObservableProperty]
     private bool switchBackWhenPause = CloudMusicLyricsProfile.SwitchBackWhenPause;
     [ObservableProperty]
+    private bool useInputedAddress = CloudMusicLyricsProfile.UseInputedAddress;
+    [ObservableProperty]
+    private string inputedAddress = CloudMusicLyricsProfile.InputedAddress;
+    [ObservableProperty]
     private int switchBackTimeout = CloudMusicLyricsProfile.SwitchBackTimeout;
     [ObservableProperty]
     private string cloudMusicVersion = string.Empty;
     [ObservableProperty]
     private string supportedVersion = CloudMusicLyricsReader.VersionResolverDictionary.Keys.FirstOrDefault() ?? string.Empty;
     public HaloPixelDevice Device { get; set; } = new();
-    public CloudMusicLyricsReader Reader { get; set; } = new();
+    public CloudMusicLyricsReader Reader { get; set; }
 
     public ISettingService SettingService { get; } = ServiceManager.GetService<ISettingService>();
 
     partial void OnEnableCloudMusicLyricsChanged(bool value) => CloudMusicLyricsProfile.EnableCloudMusicLyrics = value;
+
+    partial void OnUseInputedAddressChanged(bool value)
+    {
+        CloudMusicLyricsProfile.UseInputedAddress = value;
+        Reader.UseInputedAddress = value;
+    }
+
+    partial void OnInputedAddressChanged(string value)
+    {
+        CloudMusicLyricsProfile.InputedAddress = value;
+        Reader.Address = value.IsNullOrWhiteSpace() ? 0 : new nint(Convert.ToInt64(value, 16));
+    }
 
     partial void OnSwitchBackWhenPauseChanged(bool value) => CloudMusicLyricsProfile.SwitchBackWhenPause = value;
 
@@ -38,6 +54,12 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
 
     public CloudMusicLyricsToolPageViewModel()
     {
+        Console.WriteLine("初始化网易云歌词读取器");
+        Reader = new CloudMusicLyricsReader
+        {
+            UseInputedAddress = UseInputedAddress,
+            Address = InputedAddress.IsNullOrWhiteSpace() ? 0 : new nint(Convert.ToInt64(InputedAddress, 16))
+        };
         Console.WriteLine("准备启动网易云后台线程");
         Task.Run(async () =>
         {

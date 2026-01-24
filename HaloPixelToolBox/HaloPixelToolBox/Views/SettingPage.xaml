@@ -48,7 +48,7 @@
                     </controls:SettingsCard.HeaderIcon>
                     <ToggleSwitch x:Name="minimizeWhenOpenToggleSwitch" IsOn="{x:Bind ViewModel.MinimizeWhenOpen, Mode=TwoWay}"/>
                 </controls:SettingsCard>
-                <controls:SettingsCard Header="软件退出" Description="点击退出软件时的操作">
+                <controls:SettingsCard Header="关闭主界面时" Description="选择关闭主界面时的操作">
                     <controls:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xE89F;"/>
                     </controls:SettingsCard.HeaderIcon>

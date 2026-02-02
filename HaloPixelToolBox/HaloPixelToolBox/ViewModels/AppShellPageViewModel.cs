@@ -45,6 +45,12 @@ public partial class AppShellPageViewModel : ViewModelBase
                 MessageService.ShowMessage("正在检查更新...", "检查更新", InfoBarSeverity.Informational);
                 Console.WriteLine("正在检查更新...");
                 var upgradeInfo = await UpgradeHelper.GetReleaseNotes();
+                if (upgradeInfo == null)
+                {
+                    MessageService.ShowMessage("检查更新失败，请稍后重试", "检查更新", InfoBarSeverity.Error);
+                    Console.WriteLine("[ERROR]获取更新信息失败");
+                    return;
+                }
                 if (upgradeInfo.IsLatest)
                 {
                     MessageService.ShowMessage("当前已是最新版本", "检查更新", InfoBarSeverity.Success);

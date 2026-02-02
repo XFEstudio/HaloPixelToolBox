@@ -34,6 +34,25 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
 
     public ISettingService SettingService { get; } = ServiceManager.GetService<ISettingService>();
 
+    /// <summary>
+    /// Safely parse a hexadecimal address string to nint, returning 0 if parsing fails
+    /// </summary>
+    private static nint ParseHexAddress(string hexAddress)
+    {
+        if (string.IsNullOrWhiteSpace(hexAddress))
+            return 0;
+        
+        try
+        {
+            return new nint(Convert.ToInt64(hexAddress, 16));
+        }
+        catch (Exception ex) when (ex is FormatException or OverflowException or ArgumentException)
+        {
+            Console.WriteLine($"[WARNING]无法解析内存地址 '{hexAddress}'，使用默认值 0。错误：{ex.Message}");
+            return 0;
+        }
+    }
+
     partial void OnEnableCloudMusicLyricsChanged(bool value) => CloudMusicLyricsProfile.EnableCloudMusicLyrics = value;
 
     partial void OnUseInputedAddressChanged(bool value)
@@ -45,7 +64,7 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
     partial void OnInputedAddressChanged(string value)
     {
         CloudMusicLyricsProfile.InputedAddress = value;
-        Reader.Address = value.IsNullOrWhiteSpace() ? 0 : new nint(Convert.ToInt64(value, 16));
+        Reader.Address = ParseHexAddress(value);
     }
 
     partial void OnSwitchBackWhenPauseChanged(bool value) => CloudMusicLyricsProfile.SwitchBackWhenPause = value;
@@ -58,7 +77,7 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
         Reader = new CloudMusicLyricsReader
         {
             UseInputedAddress = UseInputedAddress,
-            Address = InputedAddress.IsNullOrWhiteSpace() ? 0 : new nint(Convert.ToInt64(InputedAddress, 16))
+            Address = ParseHexAddress(InputedAddress)
         };
         Console.WriteLine("准备启动网易云后台线程");
         Task.Run(async () =>

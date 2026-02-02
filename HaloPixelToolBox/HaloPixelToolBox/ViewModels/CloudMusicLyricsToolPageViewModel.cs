@@ -41,7 +41,7 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
     {
         if (string.IsNullOrWhiteSpace(hexAddress))
             return 0;
-        
+
         try
         {
             return new nint(Convert.ToInt64(hexAddress, 16));
@@ -146,6 +146,17 @@ public partial class CloudMusicLyricsToolPageViewModel : ServiceBaseViewModelBas
         Task.Run(async () =>
         {
             Console.WriteLine("启动网易云歌词主线程");
+            Console.WriteLine("等待花再设备...");
+            while (!DeviceReady)
+                await Task.Delay(500);
+            if (DeviceReady)
+            {
+                Console.WriteLine("花再设备已就绪，显示启动信息");
+                Device.SetTextLayout(Core.Models.HaloPixelTextLayout.Center);
+                Device.ShowText("花再工具箱已启动~");
+                await Task.Delay(3000);
+                Console.WriteLine("OK");
+            }
             while (true)
             {
                 bool isClockUI = false;
